@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.Board {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (52px)[8];
+      grid-template-columns: repeat(8, 52px);
+  -ms-grid-rows: (52px)[8];
+      grid-template-rows: repeat(8, 52px);
+}
+
+.Board .WhiteSquare,
+.Board .BlackSquare {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Board .WhiteSquare {
+  background: #e2e7e2;
+}
+
+.Board .BlackSquare {
+  background: #317e57;
+}
+
+.Board .isSelected {
+  background: red;
+}
+/*# sourceMappingURL=index.css.map */

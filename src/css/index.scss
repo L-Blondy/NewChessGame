@@ -1,0 +1,30 @@
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+}
+
+.Board {
+     display: grid;
+     grid-template-columns: repeat(8, 52px);
+     grid-template-rows: repeat(8, 52px);
+
+     .WhiteSquare,
+     .BlackSquare {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+     }
+
+     .WhiteSquare {
+          background: rgb(226, 231, 226);
+     }
+
+     .BlackSquare {
+          background: rgb(49, 126, 87);
+     }
+
+     .isSelected {
+          background: red;
+     }
+}
