@@ -42,5 +42,5 @@ class Game extends React.Component {
 		)
 	}
 }
-
+//test
 export default Game;
