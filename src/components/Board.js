@@ -31,6 +31,7 @@ class Board extends React.Component {
 	}
 
 	handleClick = ( piece, e ) => {
+
 		const { board, currentPlayer, selectedCoord, lostPieces } = { ...this.state };
 		const hasSelectedPieceToMove = piece.color === currentPlayer && ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row )
 		const validMove = ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row ) && ( piece.color === currentPlayer || e.target.classList.contains( "possibleMove" ) || e.target.classList.contains( "possibleEat" ) || e.target.classList.contains( "possibleRock" ) );
