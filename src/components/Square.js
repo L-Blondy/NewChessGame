@@ -9,13 +9,8 @@ function Square ( { number, pieceType, className, piece, handleClick } ) {
 		<div
 			onClick={ handleClick.bind( null, piece ) }
 			className={ `${ SquareColor }Square ${ className }` }
-			style={ {
-				backgroundImage: `url(${ backgroundImg })`,
-				backgroundSize: "37px",
-				backgroundRepeat: "no-repeat",
-				backgroundPosition: "center"
-			} }
 		>
+			<img src={ backgroundImg } />
 		</div >
 	)
 }

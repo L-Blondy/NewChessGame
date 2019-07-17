@@ -103,7 +103,7 @@ export function Pawn ( color ) {
 	this.getEatFromBehindPosition = function () {
 		return - this.direction;
 	}
-	this.EatingMove = [ { x: -1, y: this.direction }, { x: 1, y: this.direction } ]
+	this.eatingMoves = [ { x: -1, y: this.direction }, { x: 1, y: this.direction } ]
 	this.handleFirstMove = function () {
 		this.firstMove = false;
 		this.movement = [ [ { x: 0, y: this.direction } ] ];

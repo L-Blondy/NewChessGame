@@ -5,6 +5,26 @@
           box-sizing: border-box;
 }
 
+#root {
+  height: 100vh;
+  width: 100vw;
+  background: #faf7f3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #ecf3f1;
+}
+
 .Board {
   display: -ms-grid;
   display: grid;
@@ -12,6 +32,22 @@
       grid-template-columns: repeat(8, 52px);
   -ms-grid-rows: (52px)[8];
       grid-template-rows: repeat(8, 52px);
+  -webkit-box-shadow: 0 0 10px 0px #6b6a6a;
+          box-shadow: 0 0 10px 0px #6b6a6a;
+}
+
+.Board img {
+  pointer-events: none;
+}
+
+.Board [class*="Square"]::after {
+  content: "";
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-transition: -webkit-transform 200ms;
+  transition: -webkit-transform 200ms;
+  transition: transform 200ms;
+  transition: transform 200ms, -webkit-transform 200ms;
 }
 
 .Board .WhiteSquare,
@@ -27,15 +63,66 @@
           align-items: center;
 }
 
+.Board img {
+  height: 0px;
+  opacity: 0;
+  -webkit-transition: height 300ms, opacity 1000ms;
+  transition: height 300ms, opacity 1000ms;
+}
+
+.Board .whitePiece img,
+.Board .blackPiece img {
+  height: 35px;
+  opacity: 1;
+}
+
 .Board .WhiteSquare {
-  background: #e2e7e2;
+  background: #d1dbd8;
 }
 
 .Board .BlackSquare {
-  background: #317e57;
+  background: #136954;
 }
 
 .Board .isSelected {
-  background: red;
+  z-index: 1;
+  border: solid 4px #06be72;
+}
+
+.Board .possibleMove {
+  position: relative;
+}
+
+.Board .possibleMove::after {
+  content: "";
+  height: 10px;
+  width: 10px;
+  border-radius: 4px;
+  z-index: 1;
+  border: solid 3px #06be72;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.Board .possibleEat {
+  z-index: 1;
+  border: solid 4px #06be72;
+  outline: 3px solid white;
+  outline-offset: -6px;
+}
+
+.Board .possibleRock {
+  position: relative;
+}
+
+.Board .possibleRock::after {
+  content: "";
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  z-index: 1;
+  border: solid 4px #0096aa;
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
 /*# sourceMappingURL=index.css.map */
