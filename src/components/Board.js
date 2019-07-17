@@ -31,7 +31,7 @@ class Board extends React.Component {
 	}
 
 	handleClick = ( piece, e ) => {
-		const { board, currentPlayer, selectedCoord, lostPieces } = this.state;
+		const { board, currentPlayer, selectedCoord, lostPieces } = { ...this.state };
 		const hasSelectedPieceToMove = piece.color === currentPlayer && ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row )
 		const validMove = ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row ) && ( piece.color === currentPlayer || e.target.classList.contains( "possibleMove" ) || e.target.classList.contains( "possibleEat" ) || e.target.classList.contains( "possibleRock" ) );
 
@@ -69,35 +69,37 @@ class Board extends React.Component {
 			const pawnDoubleMove = playedPiece.name === "Pawn" && ( row === 3 || row === 4 );
 			const didRock = e.target.classList.contains( "possibleRock" );
 			let firstMoveWeakness = null;
+			let boardCopy = board.map( line => [ ...line ] )
 
 			if ( ateSomething ) {
 				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...board[ row ][ col ] } ]
 			}
 
-			movePiece( board, selectedCoord, piece.coord );
+			boardCopy = movePiece( boardCopy, selectedCoord, piece.coord );
 
 			if ( didRock ) {
-				handleRock( this.state.board, piece.coord )
+				boardCopy = handleRock( boardCopy, piece.coord )
 			}
 
 			if ( ateFromBehind ) {
-				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...board[ row - direction ][ col ] } ]
-				board[ row - direction ][ col ] = Object.assign( {}, new EmptySlot(), { coord: { row: row - direction, col } } )
+				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...boardCopy[ row - direction ][ col ] } ]
+				boardCopy[ row - direction ][ col ] = Object.assign( {}, new EmptySlot(), { coord: { row: row - direction, col } } )
 
 			}
 
 			if ( playedPiece.firstMove ) {
-				board[ piece.coord.row ][ piece.coord.col ].handleFirstMove()
+				boardCopy[ piece.coord.row ][ piece.coord.col ].handleFirstMove()
 
 				if ( pawnDoubleMove ) {
-					board[ row - direction ][ col ] = Object.assign( board[ row - direction ][ col ], { firstMoveWeakness: true } )
+					boardCopy[ row - direction ][ col ] = Object.assign( boardCopy[ row - direction ][ col ], { firstMoveWeakness: true } )
 					firstMoveWeakness = { col, row: row - direction }
 				}
 			}
-			else if ( board[ piece.coord.row ][ piece.coord.col ].name === "Pawn" && ( piece.coord.row === 0 || piece.coord.row === 7 ) )
-				changePawnToQueen( board, piece.coord, currentPlayer )
+			else if ( boardCopy[ piece.coord.row ][ piece.coord.col ].name === "Pawn" && ( piece.coord.row === 0 || piece.coord.row === 7 ) )
+				boardCopy = changePawnToQueen( boardCopy, piece.coord, currentPlayer )
 
 			this.setState( {
+				board: boardCopy,
 				selectedCoord: {},
 				LoM: { possibleMoves: [], possibleEat: [], possibleRock: [] },
 				currentPlayer: nextPlayer,
@@ -136,7 +138,7 @@ class Board extends React.Component {
 		return (
 			<div className={ "Board " + this.state.selectedCoord } >
 				{
-					this.state.board.map( ( line, row ) => line.map( ( piece, col ) => {
+					[ ...this.state.board ].map( ( line, row ) => line.map( ( piece, col ) => {
 						const className = this.getClassName( col, row )
 						return (
 							<Square

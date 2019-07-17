@@ -89,6 +89,7 @@ export function handleRock ( board, coord ) {
 		board[ coord.row ][ 4 ] = Object.assign( {}, board[ coord.row ][ 7 ], { coord: { row: coord.row, col: 4 } } )
 		board[ coord.row ][ 7 ] = Object.assign( {}, new EmptySlot(), { coord: { row: coord.row, col: 7 } } )
 	}
+	return board;
 }
 
 export function movePiece ( board, Start, End ) {
@@ -101,4 +102,5 @@ export function movePiece ( board, Start, End ) {
 
 export function changePawnToQueen ( board, coord, currentPlayer ) {
 	board[ coord.row ][ coord.col ] = Object.assign( {}, new Queen( currentPlayer ), { coord } )
+	return board;
 }
