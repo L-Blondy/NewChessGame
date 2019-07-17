@@ -1,7 +1,9 @@
 import React from "react";
 import Square from "./Square";
 import { Knight, EmptySlot, Rook, Bishop, Queen, King, Pawn } from "../pieces/Pieces.js";
-import { getPossibleMoves, getRock, getPawnEatingMoves, movePiece, changePawnToQueen, handleRock } from "../helpers/helpers"
+import { getPossibleMoves, getRock, getPawnEatingMoves, movePiece, changePawnToQueen, handleRock, animatePiece } from "../helpers/helpers"
+
+import { store } from "../reduxStore/Store";
 
 const initialBoard = [
 	[ new Rook( "white" ), new Knight( "white" ), new Bishop( "white" ), new King( "white" ), new Queen( "white" ), new Bishop( "white" ), new Knight( "white" ), new Rook( "white" ) ],
@@ -23,6 +25,7 @@ class Board extends React.Component {
 		board: initialBoard,
 		currentPlayer: "black",
 		selectedCoord: {},
+		StartingCoord: {},
 		LoM: { possibleMoves: [], possibleEat: [], possibleRock: [] },
 		lostPieces: {
 			white: [],
@@ -37,6 +40,10 @@ class Board extends React.Component {
 		const validMove = ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row ) && ( piece.color === currentPlayer || e.target.classList.contains( "possibleMove" ) || e.target.classList.contains( "possibleEat" ) || e.target.classList.contains( "possibleRock" ) );
 
 		if ( hasSelectedPieceToMove ) {
+			const StartingCoord = { y: e.target.getBoundingClientRect().top, x: e.target.getBoundingClientRect().left };
+			this.setState( {
+				StartingCoord: StartingCoord
+			} )
 
 			let LoM = getPossibleMoves( { ...this.state }, piece )
 
@@ -48,18 +55,23 @@ class Board extends React.Component {
 				LoM = { ...LoM, ...getPawnEatingMoves( { ...this.state }, piece ) }
 			}
 
-			this.setState( { LoM, selectedCoord: piece.coord } )
+			this.setState( {
+				LoM,
+				selectedCoord: piece.coord
+			} )
 			return
 		}
 
 		else if ( !validMove ) {
 			this.setState( {
 				selectedCoord: {},
-				LoM: { possibleMoves: [], possibleEat: [], possibleRock: [] }
+				LoM: { possibleMoves: [], possibleEat: [], possibleRock: [] },
+				StartingCoord: {},
 			} )
 		}
 
 		else if ( validMove ) {
+			const EndingCoord = { y: e.target.getBoundingClientRect().top, x: e.target.getBoundingClientRect().left };
 			const nextPlayer = currentPlayer === "black" ? "white" : "black";
 			const playedPiece = board[ selectedCoord.row ][ selectedCoord.col ]
 			const { col, row } = piece.coord;
@@ -71,7 +83,22 @@ class Board extends React.Component {
 			let firstMoveWeakness = null;
 			let boardCopy = board.map( line => [ ...line ] )
 
+			animatePiece( boardCopy, this.state.StartingCoord, EndingCoord, e.target.firstChild )
+
 			if ( ateSomething ) {
+
+				if ( currentPlayer === "black" ) {
+					store.dispatch( {
+						type: "ADD_WHITE",
+						payload: { ...board[ row ][ col ] }
+					} );
+				}
+				else if ( currentPlayer === "white" ) {
+					store.dispatch( {
+						type: "ADD_BLACK",
+						payload: { ...board[ row ][ col ] }
+					} );
+				}
 				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...board[ row ][ col ] } ]
 			}
 
@@ -84,7 +111,6 @@ class Board extends React.Component {
 			if ( ateFromBehind ) {
 				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...boardCopy[ row - direction ][ col ] } ]
 				boardCopy[ row - direction ][ col ] = Object.assign( {}, new EmptySlot(), { coord: { row: row - direction, col } } )
-
 			}
 
 			if ( playedPiece.firstMove ) {
@@ -103,7 +129,8 @@ class Board extends React.Component {
 				selectedCoord: {},
 				LoM: { possibleMoves: [], possibleEat: [], possibleRock: [] },
 				currentPlayer: nextPlayer,
-				firstMoveWeakness
+				firstMoveWeakness,
+				StartingCoord: {},
 			} )
 		}
 	}
@@ -113,6 +140,9 @@ class Board extends React.Component {
 		let className = " ";
 		if ( this.state.board[ row ][ col ].color ) {
 			className += ( this.state.board[ row ][ col ].color + "Piece " )
+		}
+		if ( this.state.board[ row ][ col ].color === this.state.currentPlayer ) {
+			className += "playing "
 		}
 		if ( selectedCoord.col === col && selectedCoord.row === row )
 			className += "isSelected ";

@@ -36,15 +36,21 @@
           box-shadow: 0 0 10px 0px #6b6a6a;
 }
 
-.Board img {
-  pointer-events: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+.Board .WhiteSquare,
+.Board .BlackSquare {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.Board [class*="Square"]::after {
+.Board .WhiteSquare::after,
+.Board .BlackSquare::after {
   content: "";
   -webkit-transform: scale(0);
           transform: scale(0);
@@ -52,6 +58,14 @@
   transition: -webkit-transform 200ms;
   transition: transform 200ms;
   transition: transform 200ms, -webkit-transform 200ms;
+}
+
+.Board .WhiteSquare {
+  background: #d1dbd8;
+}
+
+.Board .BlackSquare {
+  background: #136954;
 }
 
 .Board .WhiteSquare,
@@ -67,30 +81,29 @@
           align-items: center;
 }
 
-.Board img {
-  height: 0;
-  opacity: 0;
-  -webkit-transition: height 300ms, opacity 1000ms;
-  transition: height 300ms, opacity 1000ms;
-}
-
 .Board .whitePiece img,
 .Board .blackPiece img {
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  position: relative;
   height: 7vmin;
-  opacity: 1;
 }
 
-.Board .WhiteSquare {
-  background: #d1dbd8;
-}
-
-.Board .BlackSquare {
-  background: #136954;
+.Board .playing:hover {
+  outline: 0.5vmin solid #06be72;
+  outline-offset: -0.5vmin;
 }
 
 .Board .isSelected {
   z-index: 1;
   border: solid 0.75vmin #06be72;
+}
+
+.Board .isSelected img {
+  height: 7.5vmin;
 }
 
 .Board .possibleMove {
@@ -103,9 +116,17 @@
   width: 2vmin;
   border-radius: 0.7vmin;
   z-index: 1;
-  border: solid 0.45vmin #06be72;
+  border: solid 0.5vmin #06be72;
   -webkit-transform: scale(1);
           transform: scale(1);
+  -webkit-transition: height 70ms, width 70ms;
+  transition: height 70ms, width 70ms;
+}
+
+.Board .possibleMove:hover::after {
+  height: 2.5vmin;
+  width: 2.5vmin;
+  border: solid 0.7vmin #06be72;
 }
 
 .Board .possibleRock {
@@ -121,6 +142,14 @@
   border: solid 0.75vmin #0096aa;
   -webkit-transform: scale(1);
           transform: scale(1);
+  -webkit-transition: height 50ms, width 50ms;
+  transition: height 50ms, width 50ms;
+}
+
+.Board .possibleRock:hover::after {
+  height: 3vmin;
+  width: 3vmin;
+  border: solid 1vmin #0096aa;
 }
 
 .Board .possibleEat {
@@ -128,5 +157,15 @@
   border: solid 0.7vmin #06be72;
   outline: 0.7vmin solid white;
   outline-offset: -1.4vmin;
+}
+
+.Board .possibleEat:hover {
+  border: solid 0.9vmin #06be72;
+  outline: 0.8vmin solid white;
+  outline-offset: -1.7vmin;
+}
+
+.Board .possibleEat:hover img {
+  height: 6vmin;
 }
 /*# sourceMappingURL=index.css.map */

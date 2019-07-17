@@ -104,3 +104,23 @@ export function changePawnToQueen ( board, coord, currentPlayer ) {
 	board[ coord.row ][ coord.col ] = Object.assign( {}, new Queen( currentPlayer ), { coord } )
 	return board;
 }
+
+export function animatePiece ( board, startCoord, endCoord, image ) {
+	let xDiff = startCoord.x - endCoord.x;
+	let yDiff = startCoord.y - endCoord.y;
+	const stopCondition = xDiff > 0 ? xDiff <= 0 : xDiff >= 0;
+	image.setAttribute( "style", `transform:translate(${ xDiff }px, ${ yDiff }px)` )
+	setTimeout( () => image.setAttribute( "style", `transform:translate(0px, 0px)` ), 1000 )
+	let cancelID = window.requestAnimationFrame( animation )
+
+	function animation () {
+		const xPerFrame = xDiff / 6;
+		const yPerFrame = yDiff / 6;
+		xDiff = xDiff - xPerFrame;
+		yDiff = yDiff - yPerFrame;
+		image.setAttribute( "style", `transform:translate(${ xDiff }px, ${ yDiff }px)` )
+
+		cancelID = window.requestAnimationFrame( animation )
+		if ( cancelID % 50 === 0 ) window.cancelAnimationFrame( cancelID )
+	}
+}
