@@ -28,16 +28,20 @@
 .Board {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (52px)[8];
-      grid-template-columns: repeat(8, 52px);
-  -ms-grid-rows: (52px)[8];
-      grid-template-rows: repeat(8, 52px);
+  -ms-grid-columns: (10vmin)[8];
+      grid-template-columns: repeat(8, 10vmin);
+  -ms-grid-rows: (10vmin)[8];
+      grid-template-rows: repeat(8, 10vmin);
   -webkit-box-shadow: 0 0 10px 0px #6b6a6a;
           box-shadow: 0 0 10px 0px #6b6a6a;
 }
 
 .Board img {
   pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .Board [class*="Square"]::after {
@@ -64,7 +68,7 @@
 }
 
 .Board img {
-  height: 0px;
+  height: 0;
   opacity: 0;
   -webkit-transition: height 300ms, opacity 1000ms;
   transition: height 300ms, opacity 1000ms;
@@ -72,7 +76,7 @@
 
 .Board .whitePiece img,
 .Board .blackPiece img {
-  height: 35px;
+  height: 7vmin;
   opacity: 1;
 }
 
@@ -86,7 +90,7 @@
 
 .Board .isSelected {
   z-index: 1;
-  border: solid 4px #06be72;
+  border: solid 0.75vmin #06be72;
 }
 
 .Board .possibleMove {
@@ -95,20 +99,13 @@
 
 .Board .possibleMove::after {
   content: "";
-  height: 10px;
-  width: 10px;
-  border-radius: 4px;
+  height: 2vmin;
+  width: 2vmin;
+  border-radius: 0.7vmin;
   z-index: 1;
-  border: solid 3px #06be72;
+  border: solid 0.45vmin #06be72;
   -webkit-transform: scale(1);
           transform: scale(1);
-}
-
-.Board .possibleEat {
-  z-index: 1;
-  border: solid 4px #06be72;
-  outline: 3px solid white;
-  outline-offset: -6px;
 }
 
 .Board .possibleRock {
@@ -117,12 +114,19 @@
 
 .Board .possibleRock::after {
   content: "";
-  height: 12px;
-  width: 12px;
-  border-radius: 6px;
+  height: 2.5vmin;
+  width: 2.5vmin;
+  border-radius: 1vmin;
   z-index: 1;
-  border: solid 4px #0096aa;
+  border: solid 0.75vmin #0096aa;
   -webkit-transform: scale(1);
           transform: scale(1);
+}
+
+.Board .possibleEat {
+  z-index: 1;
+  border: solid 0.7vmin #06be72;
+  outline: 0.7vmin solid white;
+  outline-offset: -1.4vmin;
 }
 /*# sourceMappingURL=index.css.map */

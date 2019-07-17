@@ -53,7 +53,6 @@ class Board extends React.Component {
 		}
 
 		else if ( !validMove ) {
-			console.log( "invalid move" )
 			this.setState( {
 				selectedCoord: {},
 				LoM: { possibleMoves: [], possibleEat: [], possibleRock: [] }

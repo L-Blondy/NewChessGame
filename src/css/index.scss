@@ -7,7 +7,8 @@ $whitePlayer: rgb(255, 255, 255);
 $blackPlayer: rgb(26, 27, 26);
 
 $possibleMove-clr:rgb(6, 190, 114);
-$possibleEat-clr: rgb(6, 190, 114); //rgb(218, 137, 16);
+$possibleEat-clr: rgb(6, 190, 114);
+$possibleEat-outline: rgb(255, 255, 255);
 $possibleRock-clr: rgb(0, 150, 170);
 $forbiddenMove-clr: rgb(253, 66, 66);
 $selected-clr:rgb(6, 184, 175);
@@ -32,12 +33,13 @@ $selected-clr:rgb(6, 184, 175);
 
 .Board {
      display: grid;
-     grid-template-columns: repeat(8, 52px);
-     grid-template-rows: repeat(8, 52px);
+     grid-template-columns: repeat(8, 10vmin);
+     grid-template-rows: repeat(8, 10vmin);
      box-shadow: 0 0 10px 0px rgb(107, 106, 106);
 
      img {
           pointer-events: none;
+          user-select: none;
      }
 
      [class*="Square"]::after {
@@ -55,7 +57,7 @@ $selected-clr:rgb(6, 184, 175);
 
 
      img {
-          height: 0px;
+          height: 0;
           opacity: 0;
           transition: height 300ms, opacity 1000ms;
      }
@@ -63,7 +65,7 @@ $selected-clr:rgb(6, 184, 175);
      .whitePiece,
      .blackPiece {
           img {
-               height: 35px;
+               height: 7vmin;
                opacity: 1;
           }
      }
@@ -78,7 +80,7 @@ $selected-clr:rgb(6, 184, 175);
 
      .isSelected {
           z-index: 1;
-          border: solid 4px $possibleMove-clr;
+          border: solid 0.75vmin $possibleMove-clr;
      }
 
      .possibleMove {
@@ -86,20 +88,13 @@ $selected-clr:rgb(6, 184, 175);
 
           &::after {
                content: "";
-               height: 10px;
-               width: 10px;
-               border-radius: 4px;
+               height: 2vmin;
+               width: 2vmin;
+               border-radius: 0.7vmin;
                z-index: 1;
-               border: solid 3px $possibleMove-clr;
+               border: solid 0.45vmin $possibleMove-clr;
                transform: scale(1);
           }
-     }
-
-     .possibleEat {
-          z-index: 1;
-          border: solid 4px $possibleEat-clr;
-          outline: 3px solid rgb(255, 255, 255);
-          outline-offset: -6px;
      }
 
      .possibleRock {
@@ -107,12 +102,19 @@ $selected-clr:rgb(6, 184, 175);
 
           &::after {
                content: "";
-               height: 12px;
-               width: 12px;
-               border-radius: 6px;
+               height: 2.5vmin;
+               width: 2.5vmin;
+               border-radius: 1vmin;
                z-index: 1;
-               border: solid 4px $possibleRock-clr;
+               border: solid 0.75vmin $possibleRock-clr;
                transform: scale(1);
           }
+     }
+
+     .possibleEat {
+          z-index: 1;
+          border: solid 0.7vmin $possibleEat-clr;
+          outline: 0.7vmin solid $possibleEat-outline;
+          outline-offset: -1.4vmin;
      }
 }
