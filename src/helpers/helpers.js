@@ -31,7 +31,7 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 				const isEnemy = hyptheticalMove.color && hyptheticalMove.color !== currentPlayer;
 
 				if ( isEmptySlot ) {
-					if ( checkValidity ) { //check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
+					if ( checkValidity ) { //avoids infinite CB // check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
 						const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
 						isAllowed
 							? LoM.possibleMoves.push( { col: col + x, row: row + y } )
@@ -48,7 +48,7 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 					if ( hyptheticalMove.name === "King" ) {
 						LoM.possibleChess = true; // used in the "checkifAllowed" method : if true the move is not allowed
 					}
-					if ( checkValidity ) { //check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
+					if ( checkValidity ) { //avoids infinite CB // check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
 						const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
 						isAllowed
 							? LoM.possibleMoves.push( { col: col + x, row: row + y } )
