@@ -16,6 +16,28 @@
   }
 }
 
+@-webkit-keyframes possibility {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes possibility {
+  from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -56,6 +78,7 @@
 
 .Board .WhiteSquare,
 .Board .BlackSquare {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -67,22 +90,6 @@
           align-items: center;
   -webkit-transition: border-width 200ms;
   transition: border-width 200ms;
-}
-
-.Board .WhiteSquare::after, .Board .WhiteSquare::before,
-.Board .BlackSquare::after,
-.Board .BlackSquare::before {
-  position: absolute;
-  content: "";
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-transform: scale(0);
-          transform: scale(0);
-  -webkit-transition: z-index 0ms;
-  transition: z-index 0ms;
-  -webkit-transition-delay: 70ms;
-          transition-delay: 70ms;
-  z-index: 100;
 }
 
 .Board .WhiteSquare {
@@ -154,16 +161,18 @@
           transition-delay: 0ms;
 }
 
-.Board .possibleMove {
-  position: relative;
-}
-
 .Board .possibleMove::after, .Board .possibleMove::before {
+  position: absolute;
+  content: "";
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   height: 3vmin;
   width: 3vmin;
   border-radius: 0.7vmin;
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  -webkit-animation-name: possibility;
+          animation-name: possibility;
+  -webkit-animation-duration: 150ms;
+          animation-duration: 150ms;
 }
 
 .Board .possibleMove::after {
@@ -181,7 +190,7 @@
 }
 
 .Board .possibleMove:hover::after {
-  border-width: 1.85vmin;
+  border-width: 1.9vmin;
   border-radius: 0.8vmin;
 }
 
@@ -192,16 +201,18 @@
   border-width: 0.8vmin;
 }
 
-.Board .possibleRock {
-  position: relative;
-}
-
 .Board .possibleRock::after, .Board .possibleRock::before {
+  position: absolute;
+  content: "";
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   height: 4vmin;
   width: 4vmin;
   border-radius: 1vmin;
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  -webkit-animation-name: possibility;
+          animation-name: possibility;
+  -webkit-animation-duration: 150ms;
+          animation-duration: 150ms;
 }
 
 .Board .possibleRock::after {
@@ -280,8 +291,8 @@
 
 .fas {
   position: absolute;
+  color: #777777;
   font-size: 40px;
   right: 5vmin;
   top: 3vmin;
 }
-/*# sourceMappingURL=index.css.map */

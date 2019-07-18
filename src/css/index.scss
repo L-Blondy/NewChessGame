@@ -23,6 +23,16 @@ $selected-clr: rgb(6, 184, 175);
      }
 }
 
+@keyframes possibility {
+     from {
+          transform: scale(0);
+     }
+
+     to {
+          transform: scale(1);
+     }
+}
+
 * {
      margin: 0;
      padding: 0;
@@ -48,21 +58,11 @@ $selected-clr: rgb(6, 184, 175);
 
      .WhiteSquare,
      .BlackSquare {
+          position: relative;
           display: flex;
           justify-content: center;
           align-items: center;
           transition: border-width 200ms;
-
-          &::after,
-          &::before {
-               position: absolute;
-               content: "";
-               box-sizing: border-box;
-               transform: scale(0);
-               transition: z-index 0ms, ;
-               transition-delay: 70ms;
-               z-index: 100;
-          }
      }
 
      .WhiteSquare {
@@ -124,14 +124,17 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .possibleMove {
-          position: relative;
 
           &::after,
           &::before {
+               position: absolute;
+               content: "";
+               box-sizing: border-box;
                height: 3vmin;
                width: 3vmin;
                border-radius: 0.7vmin;
-               transform: scale(1);
+               animation-name: possibility;
+               animation-duration: 150ms;
           }
 
           &::after {
@@ -145,7 +148,7 @@ $selected-clr: rgb(6, 184, 175);
           }
 
           &:hover::after {
-               border-width: 1.85vmin;
+               border-width: 1.9vmin;
                border-radius: 0.8vmin;
           }
 
@@ -157,14 +160,17 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .possibleRock {
-          position: relative;
 
           &::after,
           &::before {
+               position: absolute;
+               content: "";
+               box-sizing: border-box;
                height: 4vmin;
                width: 4vmin;
                border-radius: 1vmin;
-               transform: scale(1);
+               animation-name: possibility;
+               animation-duration: 150ms;
           }
 
           &::after {
@@ -228,6 +234,7 @@ $selected-clr: rgb(6, 184, 175);
 
 .fas {
      position: absolute;
+     color: rgb(119, 119, 119);
      font-size: 40px;
      right: 5vmin;
      top: 3vmin;
