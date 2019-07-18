@@ -30,8 +30,8 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 				const isTeamMate = hyptheticalMove.color === currentPlayer
 				const isEnemy = hyptheticalMove.color && hyptheticalMove.color !== currentPlayer;
 
-				if ( isEmptySlot ) {
-					if ( checkValidity ) { //avoids infinite CB // check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
+				if ( isEmptySlot ) {//avoids infinite CB // if TRUE (default) : the validity of the possibleMove will be checked// if set FALSE, the possible move validity will not be checked
+					if ( checkValidity ) {
 						const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
 						isAllowed
 							? LoM.possibleMoves.push( { col: col + x, row: row + y } )
@@ -48,7 +48,7 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 					if ( hyptheticalMove.name === "King" ) {
 						LoM.possibleChess = true; // used in the "checkifAllowed" method : if true the move is not allowed
 					}
-					if ( checkValidity ) { //avoids infinite CB // check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
+					if ( checkValidity ) { //avoids infinite CB // if TRUE (default) : the validity of the possibleMove will be checked// if set FALSE, the possible move validity will not be checked
 						const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
 						isAllowed
 							? LoM.possibleMoves.push( { col: col + x, row: row + y } )
@@ -79,7 +79,7 @@ export function getPawnEatingMoves ( board, currentPlayer, firstMoveWeakness, pi
 				if ( hyptheticalMove.name === "King" ) {
 					LoM.possibleChess = true;
 				}
-				if ( checkValidity ) { //check the validity of the move only when analysing own move (defaults true) // is false when checking if the analysed own move gets the player self chessed
+				if ( checkValidity ) { //avoids infinite CB // if TRUE (default) : the validity of the possibleMove will be checked// if set FALSE, the possible move validity will not be checked
 					const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
 					isAllowed ? LoM.possibleEat.push( { col: col + x, row: row + y } ) : LoM.forbiddenMoves.push( { col: col + x, row: row + y } )
 				}
@@ -169,7 +169,7 @@ export function animatePiece ( startCoord, endCoord, image ) {
 	let yDiff = startCoord.y - endCoord.y;
 
 	image.setAttribute( "style", `transform:translate(${ xDiff }px, ${ yDiff }px)` )
-	setTimeout( () => image.setAttribute( "style", `transform:translate(0px, 0px)` ), 1000 )
+	setTimeout( () => image.setAttribute( "style", `transform:translate(0px, 0px)` ), 1000 ) //ensures there is no small pixel difference of position
 	let cancelID = window.requestAnimationFrame( animation )
 
 	function animation () {
