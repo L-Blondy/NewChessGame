@@ -2,6 +2,8 @@ import React from "react";
 
 function FullScreenBtn () {
 
+	const [ fullScreen, setScreenState ] = React.useState( false )
+
 	const root = document.getElementById( "root" )
 
 	const toggleFullscreen = () => {
@@ -15,6 +17,7 @@ function FullScreenBtn () {
 			} else if ( root.msRequestFullscreen ) { /* IE/Edge */
 				root.msRequestFullscreen();
 			}
+			setScreenState( true )
 		}
 		else {
 			if ( document.exitFullscreen ) {
@@ -26,19 +29,17 @@ function FullScreenBtn () {
 			} else if ( document.msExitFullscreen ) {
 				document.msExitFullscreen();
 			}
+			setScreenState( false )
 		}
-
-
-
 	}
+	console.log( fullScreen )
+	const icon = fullScreen
+		? <i className="fas fa-compress-arrows-alt" onClick={ toggleFullscreen }></i>
+		: <i className="fas fa-expand-arrows-alt" onClick={ toggleFullscreen }></i>
 
-	const closeFullscreen = () => {
-		console.log( root.requestFullscreen )
-
-	}
 	return (
 		<>
-			<button onClick={ toggleFullscreen }>ToggleFullScreen</button>
+			{ icon }
 		</>
 	)
 

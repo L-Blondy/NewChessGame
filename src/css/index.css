@@ -1,3 +1,21 @@
+@-webkit-keyframes lostAnim {
+  from {
+    height: 2vmin;
+  }
+  to {
+    height: 7vmin;
+  }
+}
+
+@keyframes lostAnim {
+  from {
+    height: 2vmin;
+  }
+  to {
+    height: 7vmin;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -28,10 +46,10 @@
 .Board {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (10vmin)[8];
-      grid-template-columns: repeat(8, 10vmin);
-  -ms-grid-rows: (10vmin)[8];
-      grid-template-rows: repeat(8, 10vmin);
+  -ms-grid-columns: (9vmin)[8];
+      grid-template-columns: repeat(8, 9vmin);
+  -ms-grid-rows: (9vmin)[8];
+      grid-template-rows: repeat(8, 9vmin);
   -webkit-box-shadow: 0 0 10px 0px #6b6a6a;
           box-shadow: 0 0 10px 0px #6b6a6a;
 }
@@ -47,17 +65,24 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-transition: border-width 200ms;
+  transition: border-width 200ms;
 }
 
-.Board .WhiteSquare::after,
-.Board .BlackSquare::after {
+.Board .WhiteSquare::after, .Board .WhiteSquare::before,
+.Board .BlackSquare::after,
+.Board .BlackSquare::before {
+  position: absolute;
   content: "";
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-transform: scale(0);
           transform: scale(0);
-  -webkit-transition: -webkit-transform 200ms;
-  transition: -webkit-transform 200ms;
-  transition: transform 200ms;
-  transition: transform 200ms, -webkit-transform 200ms;
+  -webkit-transition: z-index 0ms;
+  transition: z-index 0ms;
+  -webkit-transition-delay: 70ms;
+          transition-delay: 70ms;
+  z-index: 100;
 }
 
 .Board .WhiteSquare {
@@ -65,11 +90,12 @@
 }
 
 .Board .BlackSquare {
-  background: #136954;
+  background: #145f55;
 }
 
 .Board .WhiteSquare,
 .Board .BlackSquare {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -89,67 +115,120 @@
       -ms-user-select: none;
           user-select: none;
   position: relative;
-  height: 7vmin;
+  height: 6.5vmin;
+  z-index: 10;
 }
 
-.Board .playing:hover {
-  outline: 0.5vmin solid #06be72;
-  outline-offset: -0.5vmin;
+.Board .playing::after {
+  content: "";
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  border: solid 0vmin #06be72;
+  -webkit-transition: border-width 120ms 50ms;
+  transition: border-width 120ms 50ms;
+}
+
+.Board .playing:hover::after {
+  border: solid 0.75vmin #06be72;
 }
 
 .Board .isSelected {
   z-index: 1;
   border: solid 0.75vmin #06be72;
+  -webkit-transition-duration: 0ms;
+          transition-duration: 0ms;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
 }
 
-.Board .isSelected img {
-  height: 7.5vmin;
+.Board .isSelected:hover::after {
+  border-width: 0;
+  -webkit-transition-duration: 0ms;
+          transition-duration: 0ms;
+  -webkit-transition-delay: 0ms;
+          transition-delay: 0ms;
 }
 
 .Board .possibleMove {
   position: relative;
 }
 
-.Board .possibleMove::after {
-  content: "";
-  height: 2vmin;
-  width: 2vmin;
+.Board .possibleMove::after, .Board .possibleMove::before {
+  height: 3vmin;
+  width: 3vmin;
   border-radius: 0.7vmin;
-  z-index: 1;
-  border: solid 0.5vmin #06be72;
   -webkit-transform: scale(1);
           transform: scale(1);
-  -webkit-transition: height 70ms, width 70ms;
-  transition: height 70ms, width 70ms;
+}
+
+.Board .possibleMove::after {
+  border: solid 0.5vmin #06be72;
+  -webkit-transition: border-width 300ms;
+  transition: border-width 300ms;
+}
+
+.Board .possibleMove::before {
+  border: solid 0 #e1f0e1;
+  -webkit-transition: border-width 500ms, -webkit-transform 250ms;
+  transition: border-width 500ms, -webkit-transform 250ms;
+  transition: border-width 500ms, transform 250ms;
+  transition: border-width 500ms, transform 250ms, -webkit-transform 250ms;
 }
 
 .Board .possibleMove:hover::after {
-  height: 2.5vmin;
-  width: 2.5vmin;
-  border: solid 0.7vmin #06be72;
+  border-width: 1.85vmin;
+  border-radius: 0.8vmin;
+}
+
+.Board .possibleMove:hover::before {
+  z-index: 1000;
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+  border-width: 0.8vmin;
 }
 
 .Board .possibleRock {
   position: relative;
 }
 
-.Board .possibleRock::after {
-  content: "";
-  height: 2.5vmin;
-  width: 2.5vmin;
+.Board .possibleRock::after, .Board .possibleRock::before {
+  height: 4vmin;
+  width: 4vmin;
   border-radius: 1vmin;
-  z-index: 1;
-  border: solid 0.75vmin #0096aa;
   -webkit-transform: scale(1);
           transform: scale(1);
-  -webkit-transition: height 50ms, width 50ms;
-  transition: height 50ms, width 50ms;
+}
+
+.Board .possibleRock::after {
+  border: solid 0.75vmin #0096aa;
+  -webkit-transition: border-width 300ms;
+  transition: border-width 300ms;
+}
+
+.Board .possibleRock::before {
+  border: solid 0.2vmin #e6e6e6;
+  -webkit-transition: border-width 500ms, -webkit-transform 250ms;
+  transition: border-width 500ms, -webkit-transform 250ms;
+  transition: border-width 500ms, transform 250ms;
+  transition: border-width 500ms, transform 250ms, -webkit-transform 250ms;
 }
 
 .Board .possibleRock:hover::after {
-  height: 3vmin;
-  width: 3vmin;
-  border: solid 1vmin #0096aa;
+  border-width: 2.35vmin;
+  outline-offset: -2.5vmin;
+  outline-width: 0.5vmin;
+}
+
+.Board .possibleRock:hover::before {
+  z-index: 1000;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  border-width: 0.9vmin;
 }
 
 .Board .possibleEat {
@@ -157,6 +236,8 @@
   border: solid 0.7vmin #06be72;
   outline: 0.7vmin solid white;
   outline-offset: -1.4vmin;
+  -webkit-transition: outline-offset 100ms, border-width 100ms;
+  transition: outline-offset 100ms, border-width 100ms;
 }
 
 .Board .possibleEat:hover {
@@ -167,5 +248,40 @@
 
 .Board .possibleEat:hover img {
   height: 6vmin;
+}
+
+.lostPieces {
+  margin: 2vmin;
+  min-height: 7.5vmin;
+  min-width: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.lostPieces img {
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  height: 7vmin;
+  -webkit-animation-name: lostAnim;
+          animation-name: lostAnim;
+  -webkit-animation-duration: 300ms;
+          animation-duration: 300ms;
+}
+
+.fas {
+  position: absolute;
+  font-size: 40px;
+  right: 5vmin;
+  top: 3vmin;
 }
 /*# sourceMappingURL=index.css.map */

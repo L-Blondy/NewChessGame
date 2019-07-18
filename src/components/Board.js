@@ -173,7 +173,6 @@ class Board extends React.Component {
 						return (
 							<Square
 								key={ row * row + col * col }
-								pieceType={ `${ piece.color }${ piece.name }` }
 								number={ col + row }
 								piece={ piece }
 								handleClick={ this.handleClick }

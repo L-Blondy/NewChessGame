@@ -1,7 +1,7 @@
 $app-background: #ecf3f1;
 
 $whiteTill: rgb(209, 219, 216);
-$blackTill: rgb(19, 105, 84);
+$blackTill: #145f55;
 
 $whitePlayer: rgb(255, 255, 255);
 $blackPlayer: rgb(26, 27, 26);
@@ -13,135 +13,222 @@ $possibleRock-clr: rgb(0, 150, 170);
 $forbiddenMove-clr: rgb(253, 66, 66);
 $selected-clr: rgb(6, 184, 175);
 
+@keyframes lostAnim {
+     from {
+          height: 2vmin
+     }
+
+     to {
+          height: 7vmin
+     }
+}
+
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
 }
 
 #root {
-	height: 100vh;
-	width: 100vw;
-	background: rgb(250, 247, 243);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background: $app-background;
+     height: 100vh;
+     width: 100vw;
+     background: rgb(250, 247, 243);
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     background: $app-background;
 }
 
 .Board {
-	display: grid;
-	grid-template-columns: repeat(8, 10vmin);
-	grid-template-rows: repeat(8, 10vmin);
-	box-shadow: 0 0 10px 0px rgb(107, 106, 106);
+     display: grid;
+     grid-template-columns: repeat(8, 9vmin);
+     grid-template-rows: repeat(8, 9vmin);
+     box-shadow: 0 0 10px 0px rgb(107, 106, 106);
 
-	.WhiteSquare,
-	.BlackSquare {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+     .WhiteSquare,
+     .BlackSquare {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: border-width 200ms;
 
-		&::after {
-			content: "";
-			transform: scale(0);
-			transition: transform 200ms;
-		}
-	}
+          &::after,
+          &::before {
+               position: absolute;
+               content: "";
+               box-sizing: border-box;
+               transform: scale(0);
+               transition: z-index 0ms, ;
+               transition-delay: 70ms;
+               z-index: 100;
+          }
+     }
 
-	.WhiteSquare {
-		background: $whiteTill;
-	}
+     .WhiteSquare {
+          background: $whiteTill;
+     }
 
-	.BlackSquare {
-		background: $blackTill;
-	}
+     .BlackSquare {
+          background: $blackTill;
+     }
 
-	.WhiteSquare,
-	.BlackSquare {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+     .WhiteSquare,
+     .BlackSquare {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+     }
 
-	.whitePiece,
-	.blackPiece {
-		img {
-			pointer-events: none;
-			user-select: none;
-			position: relative;
-			height: 7vmin;
-		}
-	}
+     .whitePiece,
+     .blackPiece {
+          img {
+               pointer-events: none;
+               user-select: none;
+               position: relative;
+               height: 6.5vmin;
+               z-index: 10;
+          }
+     }
 
-	.playing:hover {
-		outline: 0.5vmin solid $possibleMove-clr;
-		outline-offset: -0.5vmin;
-	}
+     .playing {
+          &::after {
+               content: "";
+               transform: scale(1);
+               position: absolute;
+               top: 0;
+               right: 0;
+               left: 0;
+               bottom: 0;
+               border: solid 0vmin $possibleMove-clr;
+               transition: border-width 120ms 50ms;
+          }
 
-	.isSelected {
-		z-index: 1;
-		border: solid 0.75vmin $possibleMove-clr;
-		img {
-			height: 7.5vmin;
-		}
-	}
+          &:hover::after {
+               border: solid 0.75vmin $possibleMove-clr;
+          }
+     }
 
-	.possibleMove {
-		position: relative;
+     .isSelected {
+          z-index: 1;
+          border: solid 0.75vmin $possibleMove-clr;
+          transition-duration: 0ms;
+          transition-delay: 0ms;
 
-		&::after {
-			content: "";
-			height: 2vmin;
-			width: 2vmin;
-			border-radius: 0.7vmin;
-			z-index: 1;
-			border: solid 0.5vmin $possibleMove-clr;
-			transform: scale(1);
-			transition: height 70ms, width 70ms;
-		}
+          &:hover::after {
+               border-width: 0;
+               transition-duration: 0ms;
+               transition-delay: 0ms;
+          }
+     }
 
-		&:hover::after {
-			height: 2.5vmin;
-			width: 2.5vmin;
-			border: solid 0.7vmin $possibleMove-clr;
-		}
-	}
+     .possibleMove {
+          position: relative;
 
-	.possibleRock {
-		position: relative;
+          &::after,
+          &::before {
+               height: 3vmin;
+               width: 3vmin;
+               border-radius: 0.7vmin;
+               transform: scale(1);
+          }
 
-		&::after {
-			content: "";
-			height: 2.5vmin;
-			width: 2.5vmin;
-			border-radius: 1vmin;
-			z-index: 1;
-			border: solid 0.75vmin $possibleRock-clr;
-			transform: scale(1);
-			transition: height 50ms, width 50ms;
-		}
+          &::after {
+               border: solid 0.5vmin $possibleMove-clr;
+               transition: border-width 300ms;
+          }
 
-		&:hover::after {
-			height: 3vmin;
-			width: 3vmin;
-			border: solid 1vmin $possibleRock-clr;
-		}
-	}
+          &::before {
+               border: solid 0 rgb(225, 240, 225);
+               transition: border-width 500ms, transform 250ms;
+          }
 
-	.possibleEat {
-		z-index: 1;
-		border: solid 0.7vmin $possibleEat-clr;
-		outline: 0.7vmin solid $possibleEat-outline;
-		outline-offset: -1.4vmin;
+          &:hover::after {
+               border-width: 1.85vmin;
+               border-radius: 0.8vmin;
+          }
 
-		&:hover {
-			border: solid 0.9vmin $possibleEat-clr;
-			outline: 0.8vmin solid $possibleEat-outline;
-			outline-offset: -1.7vmin;
-			img {
-				height: 6vmin;
-			}
-		}
-	}
+          &:hover::before {
+               z-index: 1000;
+               transform: scale(0.8);
+               border-width: 0.8vmin;
+          }
+     }
+
+     .possibleRock {
+          position: relative;
+
+          &::after,
+          &::before {
+               height: 4vmin;
+               width: 4vmin;
+               border-radius: 1vmin;
+               transform: scale(1);
+          }
+
+          &::after {
+               border: solid 0.75vmin $possibleRock-clr;
+               transition: border-width 300ms;
+          }
+
+          &::before {
+               border: solid 0.2vmin rgb(230, 230, 230);
+               transition: border-width 500ms, transform 250ms;
+          }
+
+          &:hover::after {
+               border-width: 2.35vmin;
+               outline-offset: -2.5vmin;
+               outline-width: 0.5vmin;
+          }
+
+          &:hover::before {
+               z-index: 1000;
+               transform: scale(0.7);
+               border-width: 0.9vmin;
+          }
+     }
+
+     .possibleEat {
+          z-index: 1;
+          border: solid 0.7vmin $possibleEat-clr;
+          outline: 0.7vmin solid $possibleEat-outline;
+          outline-offset: -1.4vmin;
+          transition: outline-offset 100ms, border-width 100ms;
+
+          &:hover {
+               border: solid 0.9vmin $possibleEat-clr;
+               outline: 0.8vmin solid $possibleEat-outline;
+               outline-offset: -1.7vmin;
+
+               img {
+                    height: 6vmin;
+               }
+          }
+     }
+}
+
+.lostPieces {
+     margin: 2vmin;
+     min-height: 7.5vmin;
+     min-width: 100px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+     img {
+          pointer-events: none;
+          user-select: none;
+          height: 7vmin;
+          animation-name: lostAnim;
+          animation-duration: 300ms;
+     }
+}
+
+.fas {
+     position: absolute;
+     font-size: 40px;
+     right: 5vmin;
+     top: 3vmin;
 }

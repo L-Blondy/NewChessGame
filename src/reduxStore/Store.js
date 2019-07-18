@@ -2,9 +2,8 @@ import { createStore } from "redux";
 
 function reducer ( state = { white: [], black: [] }, action ) {
 	switch ( action.type ) {
-		case "ADD_WHITE": {
+		case "ADD_WHITE":
 			return { ...state, white: [ ...state.white, action.payload ] }
-		};
 		case "ADD_BLACK":
 			return { ...state, black: [ ...state.black, action.payload ] }
 		default:
@@ -13,5 +12,3 @@ function reducer ( state = { white: [], black: [] }, action ) {
 }
 
 export let store = createStore( reducer );
-
-store.subscribe( () => console.log( store.getState() ) )
