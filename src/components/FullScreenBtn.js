@@ -10,11 +10,11 @@ function FullScreenBtn () {
 		if ( !document.webkitIsFullScreen ) {
 			if ( root.requestFullscreen ) {
 				root.requestFullscreen();
-			} else if ( root.mozRequestFullScreen ) { /* Firefox */
+			} else if ( root.mozRequestFullScreen ) {
 				root.mozRequestFullScreen();
-			} else if ( root.webkitRequestFullscreen ) { /* Chrome, Safari and Opera */
+			} else if ( root.webkitRequestFullscreen ) {
 				root.webkitRequestFullscreen();
-			} else if ( root.msRequestFullscreen ) { /* IE/Edge */
+			} else if ( root.msRequestFullscreen ) {
 				root.msRequestFullscreen();
 			}
 			setScreenState( true )
@@ -32,7 +32,6 @@ function FullScreenBtn () {
 			setScreenState( false )
 		}
 	}
-	console.log( fullScreen )
 	const icon = fullScreen
 		? <i className="fas fa-compress-arrows-alt" onClick={ toggleFullscreen }></i>
 		: <i className="fas fa-expand-arrows-alt" onClick={ toggleFullscreen }></i>

@@ -261,6 +261,27 @@
   height: 6vmin;
 }
 
+.Board .forbiddenMove::after, .Board .forbiddenMove::before {
+  position: absolute;
+  z-index: 11;
+  content: "";
+  height: 0vmin;
+  width: 3.7vmin;
+  border: solid 0.4vmin #fd4242;
+  background: #fd4242;
+  border-radius: 10px;
+}
+
+.Board .forbiddenMove::after {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.Board .forbiddenMove::before {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
 .lostPieces {
   margin: 2vmin;
   min-height: 7.5vmin;
@@ -277,6 +298,7 @@
 }
 
 .lostPieces img {
+  margin: 0 0.6vmin;
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -291,7 +313,7 @@
 
 .fas {
   position: absolute;
-  color: #777777;
+  color: #628585;
   font-size: 40px;
   right: 5vmin;
   top: 3vmin;

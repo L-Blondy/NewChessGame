@@ -5,7 +5,6 @@ import { getImage } from "../helpers/helpers"
 
 function LostPieces ( state ) {
 	const color = Object.keys( state )[ 0 ]
-	console.log( `${ color } lost pieces :`, state[ color ] )
 
 	return (
 		<div className="lostPieces">

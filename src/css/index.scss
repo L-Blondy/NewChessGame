@@ -10,16 +10,16 @@ $possibleMove-clr: rgb(6, 190, 114);
 $possibleEat-clr: rgb(6, 190, 114);
 $possibleEat-outline: rgb(255, 255, 255);
 $possibleRock-clr: rgb(0, 150, 170);
-$forbiddenMove-clr: rgb(253, 66, 66);
+$forbidden-move-color: rgb(253, 66, 66);
 $selected-clr: rgb(6, 184, 175);
 
 @keyframes lostAnim {
      from {
-          height: 2vmin
+          height: 2vmin;
      }
 
      to {
-          height: 7vmin
+          height: 7vmin;
      }
 }
 
@@ -213,6 +213,29 @@ $selected-clr: rgb(6, 184, 175);
                }
           }
      }
+
+     .forbiddenMove {
+
+          &::after,
+          &::before {
+               position: absolute;
+               z-index: 11;
+               content: "";
+               height: 0vmin;
+               width: 3.7vmin;
+               border: solid 0.4vmin $forbidden-move-color;
+               background: $forbidden-move-color;
+               border-radius: 10px;
+          }
+
+          &::after {
+               transform: rotate(45deg);
+          }
+
+          &::before {
+               transform: rotate(-45deg);
+          }
+     }
 }
 
 .lostPieces {
@@ -224,6 +247,7 @@ $selected-clr: rgb(6, 184, 175);
      align-items: center;
 
      img {
+          margin: 0 0.6vmin;
           pointer-events: none;
           user-select: none;
           height: 7vmin;
@@ -234,7 +258,7 @@ $selected-clr: rgb(6, 184, 175);
 
 .fas {
      position: absolute;
-     color: rgb(119, 119, 119);
+     color: rgb(98, 133, 133);
      font-size: 40px;
      right: 5vmin;
      top: 3vmin;
