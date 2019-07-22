@@ -84,7 +84,7 @@ class Board extends React.Component {
 			const didRock = e.target.classList.contains( "possibleRock" );
 			let firstMoveWeakness = null;
 
-			animatePiece( stateCopy.StartingCoord, EndingCoord, e.target.firstChild )
+			animatePiece( stateCopy.StartingCoord, EndingCoord, e.target );
 
 			if ( ateSomething ) {
 

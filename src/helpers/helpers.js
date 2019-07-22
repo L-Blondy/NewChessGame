@@ -164,24 +164,19 @@ export function changePawnToQueen ( board, coord, currentPlayer ) {
 	return board;
 }
 
-export function animatePiece ( startCoord, endCoord, image ) {
-	let xDiff = startCoord.x - endCoord.x;
-	let yDiff = startCoord.y - endCoord.y;
+export function animatePiece ( startCoord, endCoord, target ) {
+	const root = document.documentElement;
 
-	image.setAttribute( "style", `transform:translate(${ xDiff }px, ${ yDiff }px)` )
-	setTimeout( () => image.setAttribute( "style", `transform:translate(0px, 0px)` ), 1000 ) //ensures there is no small pixel difference of position
-	let cancelID = window.requestAnimationFrame( animation )
+	target.firstChild.classList.toggle( "movingPiece" )
+	root.style.setProperty( "--X", `${ startCoord.x - endCoord.x }px` )
+	root.style.setProperty( "--Y", `${ startCoord.y - endCoord.y }px` )
 
-	function animation () {
-		const xPerFrame = xDiff / 6;
-		const yPerFrame = yDiff / 6;
-		xDiff = xDiff - xPerFrame;
-		yDiff = yDiff - yPerFrame;
-		image.setAttribute( "style", `transform:translate(${ xDiff }px, ${ yDiff }px)` )
-
-		cancelID = window.requestAnimationFrame( animation )
-		if ( cancelID % 50 === 0 ) window.cancelAnimationFrame( cancelID )
-	}
+	setTimeout( () => {
+		target.firstChild.classList.toggle( "movingPiece" )
+		root.style.setProperty( "--X", "0" )
+		root.style.setProperty( "--Y", "0" )
+	}, 500 )
+	console.log( target )
 }
 
 export function getImage ( piece ) {

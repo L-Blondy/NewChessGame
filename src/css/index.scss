@@ -13,6 +13,21 @@ $possibleRock-clr: rgb(0, 150, 170);
 $forbidden-move-color: rgb(253, 66, 66);
 $selected-clr: rgb(6, 184, 175);
 
+:root {
+     --X: 0px;
+     --Y: 0px;
+}
+
+@keyframes movingPiece {
+     from {
+          transform: translate(var(--X), var(--Y));
+     }
+
+     to {
+          transform: translate(0, 0);
+     }
+}
+
 @keyframes lostAnim {
      from {
           height: 2vmin;
@@ -235,6 +250,12 @@ $selected-clr: rgb(6, 184, 175);
           &::before {
                transform: rotate(-45deg);
           }
+     }
+
+     .movingPiece {
+          animation-name: movingPiece;
+          animation-duration: 500ms;
+          animation-timing-function: cubic-bezier(0.44, 0.47, 0.27, 0.99);
      }
 }
 
