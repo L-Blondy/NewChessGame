@@ -51,7 +51,7 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 					if ( checkValidity ) { //avoids infinite CB // if TRUE (default) : the validity of the possibleMove will be checked// if set FALSE, the possible move validity will not be checked
 						const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
 						isAllowed
-							? LoM.possibleMoves.push( { col: col + x, row: row + y } )
+							? LoM.possibleEat.push( { col: col + x, row: row + y } )
 							: LoM.forbiddenMoves.push( { col: col + x, row: row + y } )
 					}
 					LoM.possibleEat.push( { col: col + x, row: row + y } )

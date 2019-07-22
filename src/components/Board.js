@@ -1,3 +1,4 @@
+
 import React from "react";
 import Square from "./Square";
 import { Knight, EmptySlot, Rook, Bishop, Queen, King, Pawn } from "../pieces/Pieces.js";
@@ -146,30 +147,31 @@ class Board extends React.Component {
 		if ( boardCopy[ row ][ col ].color === currentPlayer ) {
 			className += "playing "
 		}
-		if ( selectedCoord.col === col && selectedCoord.row === row )
+		if ( selectedCoord.col === col && selectedCoord.row === row ) {
 			return className += "isSelected ";
-		if ( LoM.forbiddenMoves ) {
+		}
+		if ( "forbiddenMoves" in LoM ) {
 			for ( let i = 0; i < LoM.forbiddenMoves.length; i++ ) {
 				if ( LoM.forbiddenMoves[ i ].col === col && LoM.forbiddenMoves[ i ].row === row ) {
 					return className += "forbiddenMove ";
 				}
 			}
 		}
-		if ( LoM.possibleMoves ) {
+		if ( "possibleMoves" in LoM ) {
 			for ( let i = 0; i < LoM.possibleMoves.length; i++ ) {
 				if ( LoM.possibleMoves[ i ].col === col && LoM.possibleMoves[ i ].row === row ) {
 					return className += "possibleMove ";
 				}
 			}
 		}
-		if ( LoM.possibleEat ) {
+		if ( "possibleEat" in LoM ) {
 			for ( let i = 0; i < LoM.possibleEat.length; i++ ) {
 				if ( LoM.possibleEat[ i ].col === col && LoM.possibleEat[ i ].row === row ) {
 					return className += "possibleEat ";
 				}
 			}
 		}
-		if ( LoM.possibleRock ) {
+		if ( "possibleRock" in LoM ) {
 			for ( let i = 0; i < LoM.possibleRock.length; i++ ) {
 				if ( LoM.possibleRock[ i ].col === col && LoM.possibleRock[ i ].row === row ) {
 					return className += "possibleRock ";
