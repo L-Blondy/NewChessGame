@@ -3,20 +3,20 @@ import { connect } from "react-redux";
 import { getImage } from "../helpers/helpers"
 
 
-function LostPieces ( state ) {
-	const color = Object.keys( state )[ 0 ]
+function LostPieces ( props ) {
+	const color = Object.keys( props )[ 0 ]
 
 	return (
 		<div className="lostPieces">
-			{ state[ color ].map( ( piece, index ) => {
+			{ props[ color ].map( ( piece, index ) => {
 				return <img src={ getImage( piece ) } alt="" key={ index + piece } />
 			} ) }
 		</div>
 	)
 }
 
-const mapStateToProps_WhiteLostPieces = ( state, ownProps ) => ( { white: [ ...state.white ], ...ownProps } );
+const mapStateToProps_WhiteLostPieces = ( { white }, ownProps ) => ( { white: [ ...white ], ...ownProps } );
 export const WhiteLostPieces = connect( mapStateToProps_WhiteLostPieces )( LostPieces )
 
-const mapStateToProps_BlackLostPieces = ( state, ownProps ) => ( { black: [ ...state.black ], ...ownProps } );
-export const BlackLostPieces = connect( mapStateToProps_BlackLostPieces )( LostPieces )
+const mapStateToProps_BlackLostPieces = ( { black }, ownProps ) => ( { black: [ ...black ], ...ownProps } );
+export const BlackLostPieces = connect( mapStateToProps_BlackLostPieces )( LostPieces ) 

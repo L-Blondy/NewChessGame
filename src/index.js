@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './css/index.css';
 import Board from "./components/Board"
 import FullScreenBtn from "./components/FullScreenBtn"
+import StatusPanel from "./components/StatusPanel"
 import { WhiteLostPieces, BlackLostPieces } from "./components/LostPieces"
 import { Provider } from 'react-redux';
 import { store } from "./reduxStore/Store"
@@ -16,6 +17,7 @@ ReactDOM.render(
 			<BlackLostPieces />
 			<Board />
 			<WhiteLostPieces />
+			<StatusPanel />
 		</Provider>
 	</div>,
 

@@ -1,6 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Russo+One&display=swap");
 :root {
   --X: 0px;
   --Y: 0px;
+}
+
+.App {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 @-webkit-keyframes movingPiece {
@@ -93,6 +111,7 @@
 }
 
 .Board {
+  position: relative;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (9vmin)[8];
@@ -101,6 +120,20 @@
       grid-template-rows: repeat(8, 9vmin);
   -webkit-box-shadow: 0 0 10px 0px #6b6a6a;
           box-shadow: 0 0 10px 0px #6b6a6a;
+}
+
+.Board .chessMate {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  text-align: center;
+  font-variant: small-caps;
+  font-family: "Russo One", sans-serif;
+  font-size: 8.5vmin;
+  letter-spacing: 2px;
 }
 
 .Board .WhiteSquare,
@@ -153,6 +186,10 @@
   z-index: 10;
 }
 
+.Board .playing {
+  cursor: pointer;
+}
+
 .Board .playing::after {
   content: "";
   -webkit-transform: scale(1);
@@ -186,6 +223,10 @@
           transition-duration: 0ms;
   -webkit-transition-delay: 0ms;
           transition-delay: 0ms;
+}
+
+.Board .possibleMove {
+  cursor: pointer;
 }
 
 .Board .possibleMove::after, .Board .possibleMove::before {
@@ -226,6 +267,10 @@
   -webkit-transform: scale(0.8);
           transform: scale(0.8);
   border-width: 0.8vmin;
+}
+
+.Board .possibleRock {
+  cursor: pointer;
 }
 
 .Board .possibleRock::after, .Board .possibleRock::before {
@@ -270,6 +315,7 @@
 }
 
 .Board .possibleEat {
+  cursor: pointer;
   z-index: 1;
   border: solid 0.7vmin #06be72;
   outline: 0.7vmin solid white;
@@ -286,6 +332,10 @@
 
 .Board .possibleEat:hover img {
   height: 6vmin;
+}
+
+.Board .forbiddenMove {
+  cursor: not-allowed;
 }
 
 .Board .forbiddenMove::after, .Board .forbiddenMove::before {
@@ -348,9 +398,13 @@
 }
 
 .fas {
-  position: absolute;
   color: #628585;
+  position: absolute;
   font-size: 40px;
   right: 5vmin;
   top: 3vmin;
+}
+
+.undo {
+  margin-bottom: 50px;
 }

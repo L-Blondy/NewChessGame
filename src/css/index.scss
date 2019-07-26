@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Russo+One&display=swap");
+
 $app-background: #ecf3f1;
 
 $whiteTill: rgb(209, 219, 216);
@@ -16,6 +18,14 @@ $selected-clr: rgb(6, 184, 175);
 :root {
      --X: 0px;
      --Y: 0px;
+}
+
+.App {
+     width: 100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     flex-direction: column;
 }
 
 @keyframes movingPiece {
@@ -66,10 +76,24 @@ $selected-clr: rgb(6, 184, 175);
 }
 
 .Board {
+     position: relative;
      display: grid;
      grid-template-columns: repeat(8, 9vmin);
      grid-template-rows: repeat(8, 9vmin);
      box-shadow: 0 0 10px 0px rgb(107, 106, 106);
+
+     .chessMate {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          transform: translateY(-50%);
+          text-align: center;
+          font-variant: small-caps;
+          font-family: "Russo One", sans-serif;
+          font-size: 8.5vmin;
+          letter-spacing: 2px;
+     }
 
      .WhiteSquare,
      .BlackSquare {
@@ -108,6 +132,8 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .playing {
+          cursor: pointer;
+
           &::after {
                content: "";
                transform: scale(1);
@@ -139,6 +165,7 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .possibleMove {
+          cursor: pointer;
 
           &::after,
           &::before {
@@ -175,6 +202,7 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .possibleRock {
+          cursor: pointer;
 
           &::after,
           &::before {
@@ -212,6 +240,8 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .possibleEat {
+          cursor: pointer;
+
           z-index: 1;
           border: solid 0.7vmin $possibleEat-clr;
           outline: 0.7vmin solid $possibleEat-outline;
@@ -230,6 +260,7 @@ $selected-clr: rgb(6, 184, 175);
      }
 
      .forbiddenMove {
+          cursor: not-allowed;
 
           &::after,
           &::before {
@@ -278,9 +309,13 @@ $selected-clr: rgb(6, 184, 175);
 }
 
 .fas {
-     position: absolute;
      color: rgb(98, 133, 133);
+     position: absolute;
      font-size: 40px;
      right: 5vmin;
      top: 3vmin;
+}
+
+.undo {
+     margin-bottom: 50px;
 }
