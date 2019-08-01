@@ -1,3 +1,4 @@
+// Constructors base
 function Base ( color ) {
 	this.name = this.constructor.name;
 	this.color = color;

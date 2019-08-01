@@ -1,9 +1,10 @@
 import React from "react";
 import Square from "./Square";
 import { Knight, EmptySlot, Rook, Bishop, Queen, King, Pawn } from "../pieces/Pieces.js";
-import { verifyChessMate, getPossibleMoves, getRock, getPawnEatingMoves, movePiece, changePawnToQueen, handleRock, animatePiece } from "../helpers/helpers"
+import { rotateBkg, verifyChessMate, getPossibleMoves, getRock, getPawnEatingMoves, movePiece, changePawnToQueen, handleRock, animatePiece } from "../helpers/helpers"
 import { connect } from "react-redux";
 import { store } from "../reduxStore/Store";
+import _ from 'lodash';
 
 const initialBoard = [
 	[ new Rook( "white" ), new Knight( "white" ), new Bishop( "white" ), new King( "white" ), new Queen( "white" ), new Bishop( "white" ), new Knight( "white" ), new Rook( "white" ) ],
@@ -36,6 +37,7 @@ class Board extends React.Component {
 	}
 
 	componentDidUpdate = () => {
+		// handle UNDO
 		if ( this.props.undo ) {
 			console.log( this.state.prevState.lostPieces )
 			this.setState( this.state.prevState );
@@ -46,12 +48,14 @@ class Board extends React.Component {
 	}
 
 	handleClick = ( piece, e ) => {
-		let boardCopy = this.state.board.map( line => [ ...line ] );
-		const stateCopy = { ...this.state, board: boardCopy };
+		const stateCopy = _.cloneDeep( this.state )
 		let { board, currentPlayer, selectedCoord, lostPieces } = { ...stateCopy };
 		const hasSelectedPieceToMove = piece.color === currentPlayer && ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row )
 		const validMove = ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row ) && ( piece.color === currentPlayer || e.target.classList.contains( "possibleMove" ) || e.target.classList.contains( "possibleEat" ) || e.target.classList.contains( "possibleRock" ) );
 
+		/******************
+		 *  SELECTING PIECE TO MOVE
+		 */
 		if ( hasSelectedPieceToMove ) {
 			const StartingCoord = { y: e.target.getBoundingClientRect().top, x: e.target.getBoundingClientRect().left };
 			this.setState( {
@@ -61,7 +65,7 @@ class Board extends React.Component {
 			let LoM = getPossibleMoves( board, stateCopy.currentPlayer, piece )
 
 			if ( piece.name === "King" && piece.firstMove ) {
-				LoM = { ...LoM, ...getRock( { ...stateCopy }, piece ) }
+				LoM = { ...LoM, ...getRock( _.cloneDeep( stateCopy ), piece ) }
 			}
 
 			if ( piece.name === "Pawn" ) {
@@ -75,6 +79,9 @@ class Board extends React.Component {
 			return
 		}
 
+		/******************
+		 * INVALID MOVE
+		 */
 		else if ( !validMove ) {
 			this.setState( {
 				selectedCoord: {},
@@ -83,6 +90,9 @@ class Board extends React.Component {
 			} )
 		}
 
+		/******************
+		 * VALID MOVE
+		 */
 		else if ( validMove ) {
 			const EndingCoord = { y: e.target.getBoundingClientRect().top, x: e.target.getBoundingClientRect().left };
 			const nextPlayer = currentPlayer === "black" ? "white" : "black";
@@ -95,7 +105,7 @@ class Board extends React.Component {
 			const didRock = e.target.classList.contains( "possibleRock" );
 			let firstMoveWeakness = null;
 
-			//save previous state in case of UNDO
+			// save previous state in case of future UNDO
 			this.setState( {
 				prevState: {
 					currentPlayer,
@@ -112,10 +122,10 @@ class Board extends React.Component {
 				}
 			} )
 
-			// this.state.board.map( line => [ ...line ] );
-
+			//trigger animation
 			animatePiece( stateCopy.StartingCoord, EndingCoord, e.target );
 
+			// update lost pieces
 			if ( ateSomething ) {
 				if ( currentPlayer === "black" ) {
 					store.dispatch( {
@@ -132,17 +142,21 @@ class Board extends React.Component {
 				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...board[ row ][ col ] } ]
 			}
 
+			//update the board copy with the move
 			board = movePiece( board, selectedCoord, piece.coord );
 
+			//handle Rock if Rocked
 			if ( didRock ) {
 				board = handleRock( board, piece.coord )
 			}
 
+			// handle eat after Pion makes double move as first move
 			else if ( ateFromBehind ) {
 				lostPieces[ nextPlayer ] = [ ...lostPieces[ nextPlayer ], { ...board[ row - direction ][ col ] } ]
 				board[ row - direction ][ col ] = Object.assign( {}, new EmptySlot(), { coord: { row: row - direction, col } } )
 			}
 
+			//handle first move : 1. pass firstMove to false, 2. set firstMoveWeakness if Pion made a double move
 			if ( playedPiece.firstMove ) {
 				board[ piece.coord.row ][ piece.coord.col ].handleFirstMove()
 
@@ -151,17 +165,26 @@ class Board extends React.Component {
 					firstMoveWeakness = { col, row: row - direction }
 				}
 			}
+
+			//Transform Pion to Queen if needed
 			if ( board[ piece.coord.row ][ piece.coord.col ].name === "Pawn" && ( piece.coord.row === 0 || piece.coord.row === 7 ) )
 				board = changePawnToQueen( board, piece.coord, currentPlayer ) //pawn becomes queen on last row
 
+			//Change current Player in global Store
 			store.dispatch( {
 				type: "SWITCH_PLAYER",
 				payload: nextPlayer
 			} )
+
+			//increase move counter by 1 in global state
 			store.dispatch( {
 				type: "ADD_MOVE",
 			} )
 
+			//rotate board bkg
+			rotateBkg( currentPlayer )
+
+			//update the state
 			this.setState( {
 				board: board,
 				selectedCoord: {},
@@ -174,6 +197,7 @@ class Board extends React.Component {
 		}
 	}
 
+	// get Class Name during rendering process
 	getClassName = ( state, col, row ) => {
 		let boardCopy = state.board.map( line => [ ...line ] );
 		const { selectedCoord, LoM, currentPlayer } = { ...state };
@@ -223,24 +247,26 @@ class Board extends React.Component {
 
 		const nextPlayer = this.state.currentPlayer === "black" ? "white" : "black";
 		return (
-			<div className={ "Board " + this.state.selectedCoord } >
-				{
-					this.state.board.map( ( line, row ) => line.map( ( piece, col ) => {
-						const className = this.getClassName( this.state, col, row )
-						return (
-							<Square
-								key={ row * row + col * col }
-								number={ col + row }
-								piece={ piece }
-								handleClick={ this.handleClick }
-								className={ className }
-							/>
-						)
-					} ) )
-				}
-				{ this.state.chessMate && (
-					<div className="chessMate">{ nextPlayer + " wins" }</div>
-				) }
+			<div className="board-bkg">
+				<div className={ "Board " + this.state.selectedCoord } >
+					{
+						this.state.board.map( ( line, row ) => line.map( ( piece, col ) => {
+							const className = this.getClassName( this.state, col, row )
+							return (
+								<Square
+									key={ row * row + col * col }
+									number={ col + row }
+									piece={ piece }
+									handleClick={ this.handleClick }
+									className={ className }
+								/>
+							)
+						} ) )
+					}
+					{ this.state.chessMate && (
+						<div className="chessMate">{ nextPlayer + " wins" }</div>
+					) }
+				</div>
 			</div>
 		)
 	}

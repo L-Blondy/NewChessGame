@@ -2,10 +2,22 @@
 :root {
   --X: 0px;
   --Y: 0px;
+  --angle: 0deg;
+}
+
+/*******************
+* General styling
+*/
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .App {
   width: 100%;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -21,6 +33,29 @@
           flex-direction: column;
 }
 
+#root {
+  height: 100vh;
+  width: 100vw;
+  background: #faf7f3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #ecf3f1;
+}
+
+/********************
+* Animations
+*/
 @-webkit-keyframes movingPiece {
   from {
     -webkit-transform: translate(var(--X), var(--Y));
@@ -31,7 +66,6 @@
             transform: translate(0, 0);
   }
 }
-
 @keyframes movingPiece {
   from {
     -webkit-transform: translate(var(--X), var(--Y));
@@ -83,43 +117,25 @@
   }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-#root {
-  height: 100vh;
-  width: 100vw;
-  background: #faf7f3;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background: #ecf3f1;
+/********************
+* Board Styling
+*/
+.board-bkg {
+  padding: 0.8vmin;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(var(--angle)), color-stop(#e9ca1b), to(#0d3d2f));
+  background-image: linear-gradient(var(--angle), #e9ca1b, #0d3d2f);
+  -webkit-box-shadow: 0 0 2vmin 0px #5c5959;
+          box-shadow: 0 0 2vmin 0px #5c5959;
 }
 
 .Board {
   position: relative;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (9vmin)[8];
-      grid-template-columns: repeat(8, 9vmin);
-  -ms-grid-rows: (9vmin)[8];
-      grid-template-rows: repeat(8, 9vmin);
-  -webkit-box-shadow: 0 0 10px 0px #6b6a6a;
-          box-shadow: 0 0 10px 0px #6b6a6a;
+  -ms-grid-columns: (8vmin)[8];
+      grid-template-columns: repeat(8, 8vmin);
+  -ms-grid-rows: (8vmin)[8];
+      grid-template-rows: repeat(8, 8vmin);
 }
 
 .Board .chessMate {
@@ -158,20 +174,6 @@
 
 .Board .BlackSquare {
   background: #145f55;
-}
-
-.Board .WhiteSquare,
-.Board .BlackSquare {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 .Board .whitePiece img,
@@ -368,6 +370,9 @@
           animation-timing-function: cubic-bezier(0.44, 0.47, 0.27, 0.99);
 }
 
+/******************
+* Other components
+*/
 .lostPieces {
   margin: 2vmin;
   min-height: 7.5vmin;

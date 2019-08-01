@@ -12,7 +12,34 @@ import whitePawn from "./../img/whitePawn.png";
 import whiteQueen from "./../img/whiteQueen.png";
 import whiteRook from "./../img/whiteRook.png";
 
+/*
+ *  TABLE OF CONTENT
+ * 
+ *  1. HELPERS FOR PIECE SELECTION
+ * 		1.1 getPossibleMoves
+ * 		1.2 getPawnEatingMoves
+ * 		1.3 checkifAllowed
+ * 		1.4 getRock
+ * 		1.5 verifyChessMate
+ * 
+ *  2. HELPERS TO HANDLE MOVE
+ * 		2.1 handleRock
+ * 		2.2 movePiece
+ * 		2.3 changePawnToQueen
+ * 		2.4 getPossibleMoves
+ * 
+ *  3. DISPLAY HELPERS
+ * 		3.1 animatePiece
+ * 		3.2 getImage
+ * 		3.3 rotateBkg
+ */
 
+
+/**********************************
+ * 1. HELPERS FOR PIECE SELECTION
+ **********************************/
+
+//1.1 getPossibleMoves
 export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = true ) {
 
 	return piece.movement.reduce( ( LoM, direction ) => {
@@ -64,7 +91,7 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 	}, { possibleMoves: [], possibleEat: [], forbiddenMoves: [], possibleChess: false } )
 }
 
-// Pawn is the only piece that does not eat from it's normal move, it uses another path that required its own method
+// 1.2 Pawn is the only piece that does not eat from it's normal move, it uses another path that required its own method
 export function getPawnEatingMoves ( board, currentPlayer, firstMoveWeakness, piece, LoM, checkValidity = true ) {
 	const { col, row } = piece.coord;
 	let boardCopy = board.map( line => [ ...line ] );
@@ -94,6 +121,7 @@ export function getPawnEatingMoves ( board, currentPlayer, firstMoveWeakness, pi
 	}, { possibleEat: [], forbiddenMoves: LoM.forbiddenMoves ? [ ...LoM.forbiddenMoves ] : [], possibleChess: false } )
 }
 
+// 1.3 check if the move is allowed, if it is not allowed the result will be then used to display a red cross on the Slot
 function checkifAllowed ( board, currentPlayer, currentPos, hypotheticPos ) {
 	//creates a fake board for each possible move / eat of the selected piece and check if OWN king gets chessed
 	//if chess => return false, the slot will become a forbidden move
@@ -116,6 +144,7 @@ function checkifAllowed ( board, currentPlayer, currentPos, hypotheticPos ) {
 	return true;
 }
 
+// 1.4 check if a rock can be done
 export function getRock ( { board }, piece ) {
 	function getClosest ( direction = 1 ) {
 		const { col, row } = piece.coord;
@@ -141,6 +170,29 @@ export function getRock ( { board }, piece ) {
 	return RockList;
 }
 
+// 1.5 check if next play has some possible moves. If so => return
+export function verifyChessMate ( board, currentPlayer ) {
+	const nextPlayer = currentPlayer === "black" ? "white" : "black";
+
+	for ( let i = 0; i < board.length; i++ ) {
+		for ( let j = 0; j < board[ i ].length; j++ ) {
+			const piece = board[ i ][ j ];
+
+			if ( piece.color === nextPlayer
+				&& ( getPossibleMoves( board, nextPlayer, piece ).possibleMoves.length
+					|| getPossibleMoves( board, nextPlayer, piece ).possibleEat.length ) ) {
+				return false
+			}
+		}
+	}
+	return true;
+}
+
+/****************************
+ * 2. HELPERS TO HANDLE MOVE
+ ****************************/
+
+// 2.1 handleRock
 export function handleRock ( board, coord ) {
 	if ( coord.col === 1 ) {
 		board[ coord.row ][ 2 ] = Object.assign( {}, new Rook( "black" ), { coord: { row: coord.row, col: 2 } } );
@@ -153,6 +205,7 @@ export function handleRock ( board, coord ) {
 	return board;
 }
 
+// 2.2 movePiece
 export function movePiece ( board, Start, End ) {
 	const playingPiece = board[ Start.row ][ Start.col ];
 	board[ End.row ][ End.col ] = Object.assign( {}, playingPiece, { coord: End } );
@@ -161,11 +214,17 @@ export function movePiece ( board, Start, End ) {
 	return board;
 }
 
+// 2.3 changePawnToQueen
 export function changePawnToQueen ( board, coord, currentPlayer ) {
 	board[ coord.row ][ coord.col ] = Object.assign( {}, new Queen( currentPlayer ), { coord } )
 	return board;
 }
 
+/***************************
+ * 3. DISPLAY HELPERS
+ ***************************/
+
+// 3.1 animatePiece
 export function animatePiece ( startCoord, endCoord, target ) {
 	const root = document.documentElement;
 
@@ -180,6 +239,7 @@ export function animatePiece ( startCoord, endCoord, target ) {
 	}, 500 )
 }
 
+// 3.2 getImage
 export function getImage ( piece ) {
 	const pieceType = `${ piece.color }${ piece.name }`
 
@@ -198,20 +258,27 @@ export function getImage ( piece ) {
 													: "";
 }
 
-//check if next play has some possible moves. If so => return
-export function verifyChessMate ( board, currentPlayer ) {
-	const nextPlayer = currentPlayer === "black" ? "white" : "black";
+// 3.3 rotateBkg
+export function rotateBkg ( currentPlayer ) {
+	let angle = currentPlayer === "black"
+		? 0
+		: 180;
+	let startingAngle = angle;
 
-	for ( let i = 0; i < board.length; i++ ) {
-		for ( let j = 0; j < board[ i ].length; j++ ) {
-			const piece = board[ i ][ j ];
-
-			if ( piece.color === nextPlayer
-				&& ( getPossibleMoves( board, nextPlayer, piece ).possibleMoves.length
-					|| getPossibleMoves( board, nextPlayer, piece ).possibleEat.length ) ) {
-				return false
-			}
-		}
+	function setAngle () {
+		if ( startingAngle - angle < 100 )
+			angle = angle - 4
+		else if ( startingAngle - angle < 150 )
+			angle = angle - 1
+		else
+			angle = angle - 0.5
+		console.log( startingAngle - angle )
+		document.documentElement.style.setProperty( "--angle", angle + "deg" )
+		if ( angle !== 0 && angle !== -180 )
+			window.requestAnimationFrame( setAngle )
 	}
-	return true;
+	setAngle()
 }
+
+
+

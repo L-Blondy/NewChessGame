@@ -10,18 +10,6 @@ const initialState = {
 
 function reducer ( state = initialState, action ) {
 	switch ( action.type ) {
-		case "RELOAD_LOST_PIECES": {
-			console.log( {
-				...state,
-				white: action.payload.white,
-				black: action.payload.black
-			} )
-			return {
-				...state,
-				white: action.payload.white,
-				black: action.payload.black
-			}
-		}
 		case "ADD_WHITE":
 			return { ...state, white: [ ...state.white, action.payload ] }
 		case "ADD_BLACK":
@@ -34,6 +22,18 @@ function reducer ( state = initialState, action ) {
 			return { ...state, move: state.move - 1 }
 		case "TOGGLE_UNDO":
 			return { ...state, undo: !state.undo }
+		case "RELOAD_LOST_PIECES": {
+			console.log( {
+				...state,
+				white: action.payload.white,
+				black: action.payload.black
+			} )
+			return {
+				...state,
+				white: action.payload.white,
+				black: action.payload.black
+			}
+		}
 		default:
 			return state;
 	}

@@ -13,7 +13,6 @@ ReactDOM.render(
 	<div className="App">
 		<FullScreenBtn />
 		<Provider store={ store }>
-
 			<BlackLostPieces />
 			<Board />
 			<WhiteLostPieces />
