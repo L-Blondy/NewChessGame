@@ -92,7 +92,7 @@ export function getPossibleMoves ( board, currentPlayer, piece, checkValidity = 
 }
 
 // 1.2 Pawn is the only piece that does not eat from it's normal move, it uses another path that required its own method
-export function getPawnEatingMoves ( board, currentPlayer, firstMoveWeakness, piece, LoM, checkValidity = true ) {
+export function getPawnEatingMoves ( board, color, firstMoveWeakness, piece, LoM, checkValidity = true ) {
 	const { col, row } = piece.coord;
 	let boardCopy = board.map( line => [ ...line ] );
 
@@ -101,13 +101,13 @@ export function getPawnEatingMoves ( board, currentPlayer, firstMoveWeakness, pi
 
 		if ( isWithinBoard ) {
 			const hyptheticalMove = board[ row + y ][ col + x ];
-			const isEnemy = hyptheticalMove.color && hyptheticalMove.color !== currentPlayer;
+			const isEnemy = hyptheticalMove.color && hyptheticalMove.color !== color;
 			if ( isEnemy ) {
 				if ( hyptheticalMove.name === "King" ) {
 					LoM.possibleChess = true;
 				}
 				if ( checkValidity ) { //avoids infinite CB // if TRUE (default) : the validity of the possibleMove will be checked// if set FALSE, the possible move validity will not be checked
-					const isAllowed = checkifAllowed( boardCopy, currentPlayer, piece.coord, { col: col + x, row: row + y } );
+					const isAllowed = checkifAllowed( boardCopy, color, piece.coord, { col: col + x, row: row + y } );
 					isAllowed ? LoM.possibleEat.push( { col: col + x, row: row + y } ) : LoM.forbiddenMoves.push( { col: col + x, row: row + y } )
 				}
 			}

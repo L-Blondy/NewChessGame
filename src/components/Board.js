@@ -49,7 +49,7 @@ class Board extends React.Component {
 
 	handleClick = ( piece, e ) => {
 		const stateCopy = _.cloneDeep( this.state )
-		let { board, currentPlayer, selectedCoord, lostPieces } = { ...stateCopy };
+		let { board, currentPlayer, selectedCoord, lostPieces } = stateCopy;
 		const hasSelectedPieceToMove = piece.color === currentPlayer && ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row )
 		const validMove = ( piece.coord.col !== selectedCoord.col || piece.coord.row !== selectedCoord.row ) && ( piece.color === currentPlayer || e.target.classList.contains( "possibleMove" ) || e.target.classList.contains( "possibleEat" ) || e.target.classList.contains( "possibleRock" ) );
 
@@ -109,7 +109,7 @@ class Board extends React.Component {
 			this.setState( {
 				prevState: {
 					currentPlayer,
-					board: stateCopy.board.map( line => [ ...line ] ),
+					board: _.cloneDeep( stateCopy.board ),
 					selectedCoord: {},
 					StartingCoord: {},
 					LoM: { possibleMoves: [], possibleEat: [], possibleRock: [], possibleChess: false },
