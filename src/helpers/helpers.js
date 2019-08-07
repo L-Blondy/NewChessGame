@@ -1,16 +1,16 @@
 import { EmptySlot, Queen, Rook } from "../pieces/Pieces"
-import blackKing from "./../img/blackKing.png";
-import blackKnight from "./../img/blackKnight.png";
-import blackPawn from "./../img/blackPawn.png";
-import blackQueen from "./../img/blackQueen.png";
-import blackRook from "./../img/blackRook.png";
-import blackBishop from "./../img/blackBishop.png";
-import whiteBishop from "./../img/whiteBishop.png";
-import whiteKing from "./../img/whiteKing.png";
-import whiteKnight from "./../img/whiteKnight.png";
-import whitePawn from "./../img/whitePawn.png";
-import whiteQueen from "./../img/whiteQueen.png";
-import whiteRook from "./../img/whiteRook.png";
+import blackKing from "../img/blackking.svg";
+import blackKnight from "../img/blackknight.svg";
+import blackPawn from "../img/blackpawn.svg";
+import blackQueen from "../img/blackqueen.svg";
+import blackRook from "../img/blackrook.svg";
+import blackBishop from "../img/blackbishop.svg";
+import whiteBishop from "../img/whitebishop.svg";
+import whiteKing from "../img/whiteking.svg";
+import whiteKnight from "../img/whiteknight.svg";
+import whitePawn from "../img/whitepawn.svg";
+import whiteQueen from "../img/whitequeen.svg";
+import whiteRook from "../img/whiterook.svg";
 
 /*
  *  TABLE OF CONTENT
