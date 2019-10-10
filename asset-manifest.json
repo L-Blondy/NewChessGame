@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/NewChessGame/static/css/main.9e44a2fa.chunk.css",
-    "main.js": "/NewChessGame/static/js/main.f2d4de42.chunk.js",
-    "main.js.map": "/NewChessGame/static/js/main.f2d4de42.chunk.js.map",
+    "main.js": "/NewChessGame/static/js/main.602e3916.chunk.js",
+    "main.js.map": "/NewChessGame/static/js/main.602e3916.chunk.js.map",
     "runtime~main.js": "/NewChessGame/static/js/runtime~main.e87011cd.js",
     "runtime~main.js.map": "/NewChessGame/static/js/runtime~main.e87011cd.js.map",
     "static/js/2.589eb858.chunk.js": "/NewChessGame/static/js/2.589eb858.chunk.js",
     "static/js/2.589eb858.chunk.js.map": "/NewChessGame/static/js/2.589eb858.chunk.js.map",
     "index.html": "/NewChessGame/index.html",
-    "precache-manifest.e89524c11fda7e8c37727d10e32ed0be.js": "/NewChessGame/precache-manifest.e89524c11fda7e8c37727d10e32ed0be.js",
+    "precache-manifest.d9c9999c7a95b0b71b92dea2480b77a8.js": "/NewChessGame/precache-manifest.d9c9999c7a95b0b71b92dea2480b77a8.js",
     "service-worker.js": "/NewChessGame/service-worker.js",
     "static/css/main.9e44a2fa.chunk.css.map": "/NewChessGame/static/css/main.9e44a2fa.chunk.css.map",
     "static/media/blackbishop.svg": "/NewChessGame/static/media/blackbishop.0fbeae9e.svg",
