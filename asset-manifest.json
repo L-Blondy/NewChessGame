@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/NewChessGame/static/css/main.9e44a2fa.chunk.css",
+    "main.js": "/NewChessGame/static/js/main.f2d4de42.chunk.js",
+    "main.js.map": "/NewChessGame/static/js/main.f2d4de42.chunk.js.map",
+    "runtime~main.js": "/NewChessGame/static/js/runtime~main.e87011cd.js",
+    "runtime~main.js.map": "/NewChessGame/static/js/runtime~main.e87011cd.js.map",
+    "static/js/2.589eb858.chunk.js": "/NewChessGame/static/js/2.589eb858.chunk.js",
+    "static/js/2.589eb858.chunk.js.map": "/NewChessGame/static/js/2.589eb858.chunk.js.map",
+    "index.html": "/NewChessGame/index.html",
+    "precache-manifest.e89524c11fda7e8c37727d10e32ed0be.js": "/NewChessGame/precache-manifest.e89524c11fda7e8c37727d10e32ed0be.js",
+    "service-worker.js": "/NewChessGame/service-worker.js",
+    "static/css/main.9e44a2fa.chunk.css.map": "/NewChessGame/static/css/main.9e44a2fa.chunk.css.map",
+    "static/media/blackbishop.svg": "/NewChessGame/static/media/blackbishop.0fbeae9e.svg",
+    "static/media/blackking.svg": "/NewChessGame/static/media/blackking.55996645.svg",
+    "static/media/blackknight.svg": "/NewChessGame/static/media/blackknight.9448fe65.svg",
+    "static/media/blackpawn.svg": "/NewChessGame/static/media/blackpawn.1936b4fb.svg",
+    "static/media/blackqueen.svg": "/NewChessGame/static/media/blackqueen.1e08c1cd.svg",
+    "static/media/blackrook.svg": "/NewChessGame/static/media/blackrook.de028d4c.svg",
+    "static/media/whitebishop.svg": "/NewChessGame/static/media/whitebishop.247f2288.svg",
+    "static/media/whiteking.svg": "/NewChessGame/static/media/whiteking.d48cb8c6.svg",
+    "static/media/whiteknight.svg": "/NewChessGame/static/media/whiteknight.d9e7ee7d.svg",
+    "static/media/whitepawn.svg": "/NewChessGame/static/media/whitepawn.e3ae362d.svg",
+    "static/media/whitequeen.svg": "/NewChessGame/static/media/whitequeen.899af581.svg",
+    "static/media/whiterook.svg": "/NewChessGame/static/media/whiterook.2775cbc7.svg"
+  }
+}
