@@ -1,6 +1,5 @@
 // Constructors base
 function Base ( color ) {
-	this.name = this.constructor.name;
 	this.color = color;
 	this.possibleMove = false;
 	this.selected = false;
@@ -15,6 +14,7 @@ export function EmptySlot () {
 
 export function Knight ( color ) {
 	Base.call( this, color )
+	this.name = "Knight";
 	this.src = "knight"
 	this.movement = [
 		[ { x: 1, y: 2 } ],
@@ -30,6 +30,7 @@ export function Knight ( color ) {
 
 export function Rook ( color ) {
 	Base.call( this, color )
+	this.name = "Rook";
 	this.src = "rook";
 	this.firstMove = true;
 	this.movement = function () {
@@ -47,6 +48,7 @@ export function Rook ( color ) {
 
 export function Bishop ( color ) {
 	Base.call( this, color )
+	this.name = "Bishop";
 	this.src = "bishop"
 	this.movement = function () {
 		let UP_LEFT = Array( 7 ).fill().reduce( ( acc, cur, index ) => ( acc.push( { x: - index - 1, y: - index - 1 } ), acc ), [] )
@@ -60,6 +62,7 @@ export function Bishop ( color ) {
 
 export function Queen ( color ) {
 	Base.call( this, color )
+	this.name = "Queen";
 	this.src = "crown"
 	this.movement = function () {
 		let UP = Array( 7 ).fill().reduce( ( acc, cur, index ) => ( acc.push( { x: 0, y: - index - 1 } ), acc ), [] )
@@ -77,6 +80,7 @@ export function Queen ( color ) {
 
 export function King ( color ) {
 	Base.call( this, color )
+	this.name = "King";
 	this.src = "king"
 	this.firstMove = true;
 	this.movement = [
@@ -96,6 +100,7 @@ export function King ( color ) {
 
 export function Pawn ( color ) {
 	Base.call( this, color )
+	this.name = "Pawn";
 	this.src = "pawn"
 	this.firstMove = true;
 	this.direction = ( color === "white" ? 1 : -1 )
