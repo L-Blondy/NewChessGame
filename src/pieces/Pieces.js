@@ -60,7 +60,7 @@ export function Bishop ( color ) {
 
 export function Queen ( color ) {
 	Base.call( this, color )
-	this.src = "queen"
+	this.src = "crown"
 	this.movement = function () {
 		let UP = Array( 7 ).fill().reduce( ( acc, cur, index ) => ( acc.push( { x: 0, y: - index - 1 } ), acc ), [] )
 		let DOWN = Array( 7 ).fill().reduce( ( acc, cur, index ) => ( acc.push( { x: 0, y: index + 1 } ), acc ), [] )

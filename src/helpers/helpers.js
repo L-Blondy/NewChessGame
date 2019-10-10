@@ -241,21 +241,20 @@ export function animatePiece ( startCoord, endCoord, target ) {
 
 // 3.2 getImage
 export function getImage ( piece ) {
-	const pieceType = `${ piece.color }${ piece.src }`
+	const pieceType = `${ piece.color }${ piece.name }`
 
-	console.log( blackQueen )
-	return pieceType === "blackking" ? blackKing
-		: pieceType === "blackknight" ? blackKnight
-			: pieceType === "blackpawn" ? blackPawn
-				: pieceType === "blackqueen" ? blackQueen
-					: pieceType === "blackrook" ? blackRook
-						: pieceType === "blackbishop" ? blackBishop
-							: pieceType === "whitebishop" ? whiteBishop
-								: pieceType === "whiteking" ? whiteKing
-									: pieceType === "whiteknight" ? whiteKnight
-										: pieceType === "whitepawn" ? whitePawn
-											: pieceType === "whitequeen" ? whiteQueen
-												: pieceType === "whiterook" ? whiteRook
+	return pieceType === "blackKing" ? blackKing
+		: pieceType === "blackKnight" ? blackKnight
+			: pieceType === "blackPawn" ? blackPawn
+				: pieceType === "blackQueen" ? blackQueen
+					: pieceType === "blackRook" ? blackRook
+						: pieceType === "blackBishop" ? blackBishop
+							: pieceType === "whiteBishop" ? whiteBishop
+								: pieceType === "whiteKing" ? whiteKing
+									: pieceType === "whiteKnight" ? whiteKnight
+										: pieceType === "whitePawn" ? whitePawn
+											: pieceType === "whiteQueen" ? whiteQueen
+												: pieceType === "whiteRook" ? whiteRook
 													: "";
 }
 

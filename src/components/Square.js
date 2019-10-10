@@ -5,7 +5,6 @@ function Square ( { number, className, piece, handleClick } ) {
 
 	const SquareColor = ( number ) % 2 === 1 ? "Black" : "White";
 
-	console.log( piece ) //getImage( piece ), 
 	return (
 		<div
 			onClick={ handleClick.bind( null, piece ) }

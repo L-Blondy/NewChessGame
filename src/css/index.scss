@@ -16,9 +16,9 @@ $forbidden-move-color: rgb(253, 66, 66);
 $selected-clr: rgb(6, 184, 175);
 
 :root {
-     --X: 0px;
-     --Y: 0px;
-     --angle: 0deg;
+	--X: 0px;
+	--Y: 0px;
+	--angle: 0deg;
 }
 
 /*******************
@@ -26,62 +26,61 @@ $selected-clr: rgb(6, 184, 175);
 */
 
 * {
-     margin: 0;
-     padding: 0;
-     box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 .App {
-     width: 100%;
-     height: 100%;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     flex-direction: column;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
-
 #root {
-     height: 100vh;
-     width: 100vw;
-     background: rgb(250, 247, 243);
-     display: flex;
-     flex-direction: column;
-     justify-content: center;
-     align-items: center;
-     background: $app-background;
+	height: 100vh;
+	width: 100vw;
+	background: rgb(250, 247, 243);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: $app-background;
 }
 
 /********************
 * Animations
 */
 @keyframes movingPiece {
-     from {
-          transform: translate(var(--X), var(--Y));
-     }
+	from {
+		transform: translate(var(--X), var(--Y));
+	}
 
-     to {
-          transform: translate(0, 0);
-     }
+	to {
+		transform: translate(0, 0);
+	}
 }
 
 @keyframes lostAnim {
-     from {
-          height: 2vmin;
-     }
+	from {
+		height: 2vmin;
+	}
 
-     to {
-          height: 7vmin;
-     }
+	to {
+		height: 7vmin;
+	}
 }
 
 @keyframes possibility {
-     from {
-          transform: scale(0);
-     }
+	from {
+		transform: scale(0);
+	}
 
-     to {
-          transform: scale(1);
-     }
+	to {
+		transform: scale(1);
+	}
 }
 
 /********************
@@ -89,225 +88,225 @@ $selected-clr: rgb(6, 184, 175);
 */
 
 .board-bkg {
-     // border effect
-     padding: 0.8vmin;
-     background-image: linear-gradient(var(--angle), rgb(233, 202, 27), rgb(13, 61, 47)); // rgb(236, 211, 99);
-     box-shadow: 0 0 2vmin 0px rgb(92, 89, 89);
+	// border effect
+	padding: 0.8vmin;
+	background-image: linear-gradient(var(--angle), rgb(233, 202, 27), rgb(13, 61, 47)); // rgb(236, 211, 99);
+	box-shadow: 0 0 2vmin 0px rgb(92, 89, 89);
 }
 
 .Board {
-     position: relative;
-     display: grid;
-     grid-template-columns: repeat(8, 8vmin);
-     grid-template-rows: repeat(8, 8vmin);
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(8, 8vmin);
+	grid-template-rows: repeat(8, 8vmin);
 
-     // chessMate banner
-     .chessMate {
-          position: absolute;
-          top: 50%;
-          left: 0;
-          right: 0;
-          transform: translateY(-50%);
-          text-align: center;
-          font-variant: small-caps;
-          font-family: "Russo One", sans-serif;
-          font-size: 8.5vmin;
-          letter-spacing: 2px;
-     }
+	// chessMate banner
+	.chessMate {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		transform: translateY(-50%);
+		text-align: center;
+		font-variant: small-caps;
+		font-family: "Russo One", sans-serif;
+		font-size: 8.5vmin;
+		letter-spacing: 2px;
+	}
 
-     // Squares
-     .WhiteSquare,
-     .BlackSquare {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transition: border-width 200ms;
-     }
+	// Squares
+	.WhiteSquare,
+	.BlackSquare {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: border-width 200ms;
+	}
 
-     .WhiteSquare {
-          background: $whiteTill;
-     }
+	.WhiteSquare {
+		background: $whiteTill;
+	}
 
-     .BlackSquare {
-          background: $blackTill;
-     }
+	.BlackSquare {
+		background: $blackTill;
+	}
 
-     // Pieces Icons
-     .whitePiece,
-     .blackPiece {
-          img {
-               pointer-events: none;
-               user-select: none;
-               position: relative;
-               height: 6.5vmin;
-               z-index: 10;
-          }
-     }
+	// Pieces Icons
+	.whitePiece,
+	.blackPiece {
+		img {
+			pointer-events: none;
+			user-select: none;
+			position: relative;
+			height: 6.5vmin;
+			z-index: 10;
+		}
+	}
 
-     // Current player cursor + hover effect
-     .playing {
-          cursor: pointer;
+	// Current player cursor + hover effect
+	.playing {
+		cursor: pointer;
 
-          &::after {
-               content: "";
-               transform: scale(1);
-               position: absolute;
-               top: 0;
-               right: 0;
-               left: 0;
-               bottom: 0;
-               border: solid 0vmin $possibleMove-clr;
-               transition: border-width 120ms 50ms;
-          }
+		&::after {
+			content: "";
+			transform: scale(1);
+			position: absolute;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0;
+			border: solid 0vmin $possibleMove-clr;
+			transition: border-width 120ms 50ms;
+		}
 
-          &:hover::after {
-               border: solid 0.75vmin $possibleMove-clr;
-          }
-     }
+		&:hover::after {
+			border: solid 0.75vmin $possibleMove-clr;
+		}
+	}
 
-     // selected piece
-     .isSelected {
-          z-index: 1;
-          border: solid 0.75vmin $possibleMove-clr;
-          transition-duration: 0ms;
-          transition-delay: 0ms;
+	// selected piece
+	.isSelected {
+		z-index: 1;
+		border: solid 0.75vmin $possibleMove-clr;
+		transition-duration: 0ms;
+		transition-delay: 0ms;
 
-          &:hover::after {
-               border-width: 0;
-               transition-duration: 0ms;
-               transition-delay: 0ms;
-          }
-     }
+		&:hover::after {
+			border-width: 0;
+			transition-duration: 0ms;
+			transition-delay: 0ms;
+		}
+	}
 
-     // possible moves
-     .possibleMove {
-          cursor: pointer;
+	// possible moves
+	.possibleMove {
+		cursor: pointer;
 
-          &::after,
-          &::before {
-               position: absolute;
-               content: "";
-               box-sizing: border-box;
-               height: 3vmin;
-               width: 3vmin;
-               border-radius: 0.7vmin;
-               animation-name: possibility;
-               animation-duration: 150ms;
-          }
+		&::after,
+		&::before {
+			position: absolute;
+			content: "";
+			box-sizing: border-box;
+			height: 3vmin;
+			width: 3vmin;
+			border-radius: 0.7vmin;
+			animation-name: possibility;
+			animation-duration: 150ms;
+		}
 
-          &::after {
-               border: solid 0.5vmin $possibleMove-clr;
-               transition: border-width 300ms;
-          }
+		&::after {
+			border: solid 0.5vmin $possibleMove-clr;
+			transition: border-width 300ms;
+		}
 
-          &::before {
-               border: solid 0 rgb(225, 240, 225);
-               transition: border-width 500ms, transform 250ms;
-          }
+		&::before {
+			border: solid 0 rgb(225, 240, 225);
+			transition: border-width 500ms, transform 250ms;
+		}
 
-          &:hover::after {
-               border-width: 1.9vmin;
-               border-radius: 0.8vmin;
-          }
+		&:hover::after {
+			border-width: 1.9vmin;
+			border-radius: 0.8vmin;
+		}
 
-          &:hover::before {
-               z-index: 1000;
-               transform: scale(0.8);
-               border-width: 0.8vmin;
-          }
-     }
+		&:hover::before {
+			z-index: 1000;
+			transform: scale(0.8);
+			border-width: 0.8vmin;
+		}
+	}
 
-     // possible rock
-     .possibleRock {
-          cursor: pointer;
+	// possible rock
+	.possibleRock {
+		cursor: pointer;
 
-          &::after,
-          &::before {
-               position: absolute;
-               content: "";
-               box-sizing: border-box;
-               height: 4vmin;
-               width: 4vmin;
-               border-radius: 1vmin;
-               animation-name: possibility;
-               animation-duration: 150ms;
-          }
+		&::after,
+		&::before {
+			position: absolute;
+			content: "";
+			box-sizing: border-box;
+			height: 4vmin;
+			width: 4vmin;
+			border-radius: 1vmin;
+			animation-name: possibility;
+			animation-duration: 150ms;
+		}
 
-          &::after {
-               border: solid 0.75vmin $possibleRock-clr;
-               transition: border-width 300ms;
-          }
+		&::after {
+			border: solid 0.75vmin $possibleRock-clr;
+			transition: border-width 300ms;
+		}
 
-          &::before {
-               border: solid 0.2vmin rgb(230, 230, 230);
-               transition: border-width 500ms, transform 250ms;
-          }
+		&::before {
+			border: solid 0.2vmin rgb(230, 230, 230);
+			transition: border-width 500ms, transform 250ms;
+		}
 
-          &:hover::after {
-               border-width: 2.35vmin;
-               outline-offset: -2.5vmin;
-               outline-width: 0.5vmin;
-          }
+		&:hover::after {
+			border-width: 2.35vmin;
+			outline-offset: -2.5vmin;
+			outline-width: 0.5vmin;
+		}
 
-          &:hover::before {
-               z-index: 1000;
-               transform: scale(0.7);
-               border-width: 0.9vmin;
-          }
-     }
+		&:hover::before {
+			z-index: 1000;
+			transform: scale(0.7);
+			border-width: 0.9vmin;
+		}
+	}
 
-     // possible eat
-     .possibleEat {
-          cursor: pointer;
+	// possible eat
+	.possibleEat {
+		cursor: pointer;
 
-          z-index: 1;
-          border: solid 0.7vmin $possibleEat-clr;
-          outline: 0.7vmin solid $possibleEat-outline;
-          outline-offset: -1.4vmin;
-          transition: outline-offset 100ms, border-width 100ms;
+		z-index: 1;
+		border: solid 0.7vmin $possibleEat-clr;
+		outline: 0.7vmin solid $possibleEat-outline;
+		outline-offset: -1.4vmin;
+		transition: outline-offset 100ms, border-width 100ms;
 
-          &:hover {
-               border: solid 0.9vmin $possibleEat-clr;
-               outline: 0.8vmin solid $possibleEat-outline;
-               outline-offset: -1.7vmin;
+		&:hover {
+			border: solid 0.9vmin $possibleEat-clr;
+			outline: 0.8vmin solid $possibleEat-outline;
+			outline-offset: -1.7vmin;
 
-               img {
-                    height: 6vmin;
-               }
-          }
-     }
+			img {
+				height: 6vmin;
+			}
+		}
+	}
 
-     //forbidden move
-     .forbiddenMove {
-          cursor: not-allowed;
+	//forbidden move
+	.forbiddenMove {
+		cursor: not-allowed;
 
-          &::after,
-          &::before {
-               position: absolute;
-               z-index: 11;
-               content: "";
-               height: 0vmin;
-               width: 3.7vmin;
-               border: solid 0.4vmin $forbidden-move-color;
-               background: $forbidden-move-color;
-               border-radius: 10px;
-          }
+		&::after,
+		&::before {
+			position: absolute;
+			z-index: 11;
+			content: "";
+			height: 0vmin;
+			width: 3.7vmin;
+			border: solid 0.4vmin $forbidden-move-color;
+			background: $forbidden-move-color;
+			border-radius: 10px;
+		}
 
-          &::after {
-               transform: rotate(45deg);
-          }
+		&::after {
+			transform: rotate(45deg);
+		}
 
-          &::before {
-               transform: rotate(-45deg);
-          }
-     }
+		&::before {
+			transform: rotate(-45deg);
+		}
+	}
 
-     .movingPiece {
-          animation-name: movingPiece;
-          animation-duration: 500ms;
-          animation-timing-function: cubic-bezier(0.44, 0.47, 0.27, 0.99);
-     }
+	.movingPiece {
+		animation-name: movingPiece;
+		animation-duration: 500ms;
+		animation-timing-function: cubic-bezier(0.44, 0.47, 0.27, 0.99);
+	}
 }
 
 /******************
@@ -316,36 +315,33 @@ $selected-clr: rgb(6, 184, 175);
 
 // Lost pieces containers
 .lostPieces {
-     margin: 2vmin;
-     min-height: 7.5vmin;
-     min-width: 100px;
-     display: flex;
-     justify-content: center;
-     align-items: center;
+	margin: 2vmin;
+	min-height: 7.5vmin;
+	min-width: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-     img {
-          margin: 0 0.6vmin;
-          pointer-events: none;
-          user-select: none;
-          height: 7vmin;
-          animation-name: lostAnim;
-          animation-duration: 300ms;
-     }
+	img {
+		margin: 0 0.6vmin;
+		pointer-events: none;
+		user-select: none;
+		height: 7vmin;
+		animation-name: lostAnim;
+		animation-duration: 300ms;
+	}
 }
 
 // full screen button
 .fas {
-     color: rgb(98, 133, 133);
-     position: absolute;
-     font-size: 40px;
-     right: 5vmin;
-     top: 3vmin;
-     height: 50px;
-     width: 50px;
-     background: red;
+	color: rgb(98, 133, 133);
+	position: absolute;
+	font-size: 40px;
+	right: 5vmin;
+	top: 3vmin;
 }
 
 //undo button
 .undo {
-     margin-bottom: 50px;
+	margin-bottom: 50px;
 }
